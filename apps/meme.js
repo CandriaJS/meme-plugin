@@ -19,8 +19,8 @@ const createRegex = async (getKeywords) => {
   return new RegExp(`${prefix}${keywordsRegex}(.*)`, 'i')
 }
 
-memeRegExp = await createRegex(async () => await utils.get_meme_all_keywords() ?? [])
-presetRegExp = await createRegex(async () => await utils.get_preset_all_keywords() ?? [])
+memeRegExp = await createRegex(async () => await utils.get_meme_all_keywords())
+presetRegExp = await createRegex(async () => await utils.get_preset_all_keywords())
 
 export class meme extends plugin {
   constructor () {
