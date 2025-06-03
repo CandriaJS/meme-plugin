@@ -66,7 +66,7 @@ export class search extends plugin {
         .map((kw, index) => `${index + 1}. ${kw}`)
         .join('\n')
 
-      await e.reply([ segment.text('你可能在找以下表情：\n' + replyMessage) ], true)
+      await e.reply([ ('你可能在找以下表情：\n' + replyMessage) ], true)
       return true
     } catch (error) {
       await e.reply(`搜索出错了：${error.message}`)

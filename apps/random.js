@@ -59,9 +59,9 @@ export class random extends plugin {
             )
 
             let replyMessage = [
-              segment.text('本次随机表情信息如下:\n'),
-              segment.text(`表情的名称: ${memeKey}\n`),
-              segment.text(`表情的别名: ${keyWords}\n`)
+              ('本次随机表情信息如下:\n'),
+              (`表情的名称: ${memeKey}\n`),
+              (`表情的别名: ${keyWords}\n`)
             ]
             if (result) {
               replyMessage.push(segment.image(result))
