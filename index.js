@@ -4,8 +4,8 @@ import path from 'node:path'
 import axios from 'axios'
 import chalk from 'chalk'
 
-import { Version  } from '#components'
-import { Utils } from '#models'
+import { Config, Version  } from '#components'
+import { server, utils } from '#models'
 
 const startTime = Date.now()
 let apps
@@ -20,21 +20,43 @@ try {
 } catch (error) {
   logger.warn('⚠️ 访问统计数据失败，超时或网络错误')
 }
-
 try {
-  await Utils.Tools.init()
+  if (Number(Config.server.mode) === 1) {
+    logger.info(chalk.bold.blue('🚀 启动表情服务端...'))
+    await server.init_server(Config.server.port)
+    logger.info(chalk.bold.green('🎉 表情服务端启动成功！'))
+  }
+} catch (error) {
+  logger.error(chalk.bold.red(`💥 表情服务端启动失败！错误详情：${error.message}`))
+}
+try {
+  await utils.init()
   logger.info(chalk.bold.cyan(`[${Version.Plugin_AliasName}] 🎉 表情包数据初始化成功！`))
 } catch (error) {
   logger.error(chalk.bold.red(`[${Version.Plugin_AliasName}] 💥 表情包数据初始化失败！错误详情：${error.message}`))
 }
 
+async function getFiles (dir) {
+  const files = await fs.readdir(dir, { withFileTypes: true })
+  const jsFiles = []
+
+  for (const file of files) {
+    const filePath = path.resolve(dir, file.name)
+    if (file.isDirectory()) {
+      jsFiles.push(...await getFiles(filePath))
+    } else if (file.isFile() && file.name.endsWith('.js')) {
+      jsFiles.push(filePath)
+    }
+  }
+
+  return jsFiles
+}
+
 try {
-  const files = (await fs.readdir(`${Version.Plugin_Path}/apps`))
-    .filter(file => file.endsWith('.js'))
+  const files = await getFiles(`${Version.Plugin_Path}/apps`)
 
   const ret = await Promise.allSettled(
-    files.map(async (file) => {
-      const filePath = path.resolve(`${Version.Plugin_Path}/apps/${file}`)
+    files.map(async (filePath) => {
       const startModuleTime = Date.now()
 
       try {
@@ -44,7 +66,7 @@ try {
 
         logger.debug(
           chalk.rgb(0, 255, 255)(`[${Version.Plugin_AliasName}]`) +
-          chalk.green(` 🚀 ${file.replace('.js', '')}`) +
+          chalk.green(` 🚀 ${path.basename(filePath, '.js')}`) +
           chalk.rgb(255, 223, 0)(` 加载时间: ${loadTime} ms`)
         )
 
@@ -52,7 +74,7 @@ try {
       } catch (error) {
         logger.error(
           chalk.bgRgb(255, 0, 0).white.bold(' ❌ 载入插件错误：') +
-          chalk.redBright(` ${file.replace('.js', '')} `) +
+          chalk.redBright(` ${path.basename(filePath, '.js')} `) +
           ' 🚫'
         )
         logger.debug(chalk.red(`📄 错误详情： ${error.message}`))
@@ -64,8 +86,8 @@ try {
 
   apps = {}
 
-  files.forEach((file, i) => {
-    const name = file.replace('.js', '')
+  files.forEach((filePath, i) => {
+    const name = path.basename(filePath, '.js')
 
     if (ret[i].status !== 'fulfilled' || !ret[i].value) {
       return
