@@ -9,7 +9,7 @@ export class status extends plugin {
       priority: -Infinity,
       rule: [
         {
-          reg: /^#?(?:(?:柠糖)?(?:表情|meme))?(?:服务端)(?:状态)?$/i,
+          reg: /^#?(?:(?:柠糖)?(?:表情|meme))(?:服务端)(?:状态)?$/i,
           fnc: 'status'
         }
       ]
