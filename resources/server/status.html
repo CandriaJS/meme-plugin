@@ -1,0 +1,54 @@
+{{extend defaultLayout}}
+
+{{block 'css'}}
+<link rel="stylesheet" type="text/css" href="{{_res_path}}/server/status.css" />
+{{/block}}
+
+{{block 'main'}}
+<div class="card-container">
+  <div class="header-card">
+    <div class="title">柠糖表情服务端状态</div>
+    <div class="subtitle">服务器运行信息</div>
+  </div>
+
+  <div class="status-grid">
+
+    <div class="status-card">
+      <div class="card-icon">📦</div>
+      <div class="card-label">插件版本</div>
+      <div class="card-value">{{version}}</div>
+    </div>
+
+    <div class="status-card">
+      <div class="card-icon">🔖</div>
+      <div class="card-label">服务端版本</div>
+      <div class="card-value">{{serverVersion}}</div>
+    </div>
+    
+    <div class="status-card">
+      <div class="card-icon">🚥</div>
+      <div class="card-label">运行状态</div>
+      <div class="card-value">{{status}}</div>
+    </div>
+
+    <div class="status-card">
+      <div class="card-icon">⏰</div>
+      <div class="card-label">启动时间</div>
+      <div class="card-value">{{runtime}}</div>
+    </div>
+
+    <div class="status-card">
+      <div class="card-icon">💾</div>
+      <div class="card-label">内存使用</div>
+      <div class="card-value">{{memory}} MB</div>
+    </div>
+
+    <div class="status-card">
+      <div class="card-icon">🖼️</div>
+      <div class="card-label">表情总数</div>
+      <div class="card-value">{{total}}</div>
+    </div>
+
+  </div>
+</div>
+{{/block}}

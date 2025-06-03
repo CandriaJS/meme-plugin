@@ -1,7 +1,7 @@
 import chalk from 'chalk'
 
 import { Config, Version } from '#components'
-import { Utils } from '#models'
+import { utils } from '#models'
 
 import pluginsLoader from '../../../lib/plugins/loader.js'
 import { update as Update } from '../../other/update.js'
@@ -10,20 +10,20 @@ import { meme } from './meme.js'
 export class update extends plugin {
   constructor () {
     super({
-      name: '清语表情:更新',
+      name: '柠糖表情:更新',
       event: 'message',
       priority: -Infinity,
       rule: [
         {
-          reg: /^#?(清语表情|meme-plugin)(插件)?(强制)?更新$/i,
+          reg: /^#?(柠糖表情|meme-plugin)(插件)?(强制)?更新$/i,
           fnc: 'update'
         },
         {
-          reg: /^#?(清语表情|meme-plugin)更新日志$/i,
+          reg: /^#?(柠糖表情|meme-plugin)更新日志$/i,
           fnc: 'updateLog'
         },
         {
-          reg: /^#?(清语表情|meme(-plugin)?)(强制)?更新(表情包)?(资源|数据)?$/i,
+          reg: /^#?(?:(?:柠糖)?表情)更新(?:表情(?:包)?)?(?:资源|数据)?$/i,
           fnc: 'updateRes'
         }
       ]
@@ -34,7 +34,7 @@ export class update extends plugin {
 
     if (Config.other.autoUpdateRes) {
       this.task.push({
-        name: '清语表情:表情包数据每日更新',
+        name: '柠糖表情:表情包数据每日更新',
         cron: Config.other.autoUpdateResCron,
         fnc: async () => {
           await this.updateRes(null, true)
@@ -42,34 +42,6 @@ export class update extends plugin {
       })
     }
 
-    this.e = {
-      isMaster: true,
-      logFnc: '[清语表情]自动更新]',
-      msg: `#更新${Version.Plugin_Name}`,
-      reply: async (msg) => {
-        const masters = Object.keys(Config.masterQQ)
-        for (const master of masters) {
-          if (master.toString().length > 11) {
-            logger.info(chalk.yellow(`[${Version.Plugin_AliasName}] 更新推送跳过 QQBot`))
-            continue
-          }
-          try {
-            await Bot.pickFriend(master).sendMsg(msg)
-            await Bot.sleep(2000)
-          } catch (err) {
-            logger.error(`[${Version.Plugin_AliasName}] 向好友 ${master} 发送消息时出错：`, err)
-          }
-        }
-      }
-    }
-
-    if (Config.other.autoUpdate) {
-      this.task.push({
-        name: '清语表情:自动更新',
-        cron: Config.other.autoUpdateCron,
-        fnc: () => this.update(this.e)
-      })
-    }
   }
 
   async update (e) {
@@ -99,12 +71,8 @@ export class update extends plugin {
     }
 
     try {
-      const forceUpdate = !isTask && e && e.msg.includes('强制')
-
-      await Promise.all([
-        Utils.Tools.generateMemeData(forceUpdate),
-        Utils.Tools.generatePresetData()
-      ])
+      await utils.update_meme(true)
+      await utils.update_preset(true)
       const Plugin = new meme()
       const pluginName = Plugin.name
       const pluginKey = pluginsLoader.priority.find((p) => {

@@ -1,5 +1,5 @@
 import { Config, Version } from '#components'
-import { Meme, Utils } from '#models'
+import { make, utils } from '#models'
 
 let memeRegExp, presetRegExp
 
@@ -9,46 +9,52 @@ let memeRegExp, presetRegExp
  * @returns {RegExp | null}
  */
 const createRegex = async (getKeywords) => {
-  const keywords = await getKeywords()
-  if (!keywords) return null
-
+  const keywords = (await getKeywords()) ?? []
+  if (keywords.length === 0) return null
   const prefix = Config.meme.forceSharp ? '^#' : '^#?'
   const escapedKeywords = keywords.map((keyword) =>
     keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
   )
-  return new RegExp(`${prefix}(${escapedKeywords.join('|')})(.*)`, 'i')
+  const keywordsRegex = `(${escapedKeywords.join('|')})`
+  return new RegExp(`${prefix}${keywordsRegex}(.*)`, 'i')
 }
 
-memeRegExp = await createRegex(() => Utils.Tools.getAllKeyWords('meme'))
-presetRegExp = await createRegex(() => Utils.Tools.getAllKeyWords('preset'))
+memeRegExp = await createRegex(async () => await utils.get_meme_all_keywords() ?? [])
+presetRegExp = await createRegex(async () => await utils.get_preset_all_keywords() ?? [])
 
 export class meme extends plugin {
   constructor () {
     super({
-      name: '清语表情:表情包生成',
+      name: '柠糖表情:表情包生成',
       event: 'message',
       priority: -Infinity,
       rule: []
     })
 
-    this.rule.push(
-      {
+    if (memeRegExp) {
+      this.rule.push({
         reg: memeRegExp,
         fnc: 'meme'
-      },
-      {
+      })
+    }
+    if (presetRegExp) {
+      this.rule.push({
         reg: presetRegExp,
         fnc: 'preset'
-      }
-    )
+      })
+    }
   }
 
   /**
    * 更新正则
    */
   async updateRegExp () {
-    memeRegExp = await createRegex(() => Utils.Tools.getAllKeyWords('meme'))
-    presetRegExp = await createRegex(() => Utils.Tools.getAllKeyWords('preset'))
+    memeRegExp = await createRegex(async () => await utils.get_meme_all_keywords() ?? [])
+    presetRegExp = await createRegex(async () => await utils.get_preset_all_keywords() ?? [])
+    if (!memeRegExp && !presetRegExp) {
+      logger.info(`[${Version.Plugin_AliasName}] 没有找到表情关键词, 请使用[#柠糖表情更新资源], 稍后再试`)
+      return false
+    }
 
     this.rule = [
       {
@@ -63,125 +69,154 @@ export class meme extends plugin {
 
     return true
   }
-
   async meme (e) {
-    return this.validatePrepareMeme(e, memeRegExp, Utils.Tools.getKey)
+    if (!Config.meme.enable) return false
+    try {
+      const [ , keyword, userText ] = e.msg.match(this.rule[0].reg)
+      const key = await utils.get_meme_key_by_keyword(keyword)
+      if (!key) return false
+      const memeInfo = await utils.get_meme_info(key)
+      const min_texts = memeInfo?.min_texts ?? 0
+      const max_texts = memeInfo?.max_texts ?? 0
+      const min_images = memeInfo?.min_images ?? 0
+      const max_images = memeInfo?.max_images ?? 0
+      const options = memeInfo?.options ?? null
+      /* 检查用户权限 */
+      if (!await this.checkUserAccess(e)) return false
+
+      /* 检查禁用表情列表 */
+      if (await this.checkBlacklisted(keyword)) return false
+
+      /* 防误触发处理 */
+      if (!await this.checkUserText(min_texts, max_texts, userText)) return false
+
+      const res = await make.make_meme(
+        e,
+        key,
+        min_texts,
+        max_texts,
+        min_images,
+        max_images,
+        options,
+        userText,
+        false
+      )
+      await e.reply([ segment.image(res) ], Config.meme.reply)
+    } catch (error) {
+      logger.error(error)
+      if (Config.meme.errorReply) {
+        const prefix = Config.meme?.prefix || Version.Plugin_AliasName
+        return await e.reply(`[${prefix}]: 生成表情失败, 错误信息: ${error.message}`)
+      }
+      return true
+    }
   }
 
   async preset (e) {
-    return this.validatePrepareMeme(
-      e,
-      presetRegExp,
-      Utils.Tools.getKey,
-      true,
-      'preset'
-    )
+    if (!Config.meme.enable) return false
+    try {
+      const [ , keyword, userText ] = e.msg.match(this.rule[1].reg)
+      const key = await utils.get_preset_key(keyword)
+      if (!key) return false
+      const memeInfo = await utils.get_meme_info(key)
+      const min_texts = memeInfo?.min_texts ?? 0
+      const max_texts = memeInfo?.max_texts ?? 0
+      const min_images = memeInfo?.min_images ?? 0
+      const max_images = memeInfo?.max_images ?? 0
+      const options = memeInfo?.options ?? null
+      /* 检查用户权限 */
+      if (!await this.checkUserAccess(e)) return false
+
+      /* 检查禁用表情列表 */
+      if (await this.checkBlacklisted(keyword)) return false
+
+      /* 防误触发处理 */
+      if (!await this.checkUserText(min_texts, max_texts, userText)) return false
+
+      const res = await make.make_meme(
+        e,
+        key,
+        min_texts,
+        max_texts,
+        min_images,
+        max_images,
+        options,
+        userText,
+        true,
+        keyword
+      )
+      await e.reply([ segment.image(res) ], Config.meme.reply)
+    } catch (error) {
+      logger.error(error)
+      if (Config.meme.errorReply) {
+        const prefix = Config.meme?.prefix || Version.Plugin_AliasName
+        return await e.reply(`[${prefix}]: 生成表情失败, 错误信息: ${error.message}`)
+      }
+      return true
+    }
   }
 
   /**
-   * 通用处理函数, 用于验证权限获取需要的参数之类的
-   */
-  async validatePrepareMeme (
-    e,
-    regExp,
-    getKeyFunc,
-    isPreset = false,
-    type = 'meme'
-  ) {
-    if (!Config.meme.enable) return false
-    const message = (e.msg || '').trim()
-    const match = message.match(regExp)
-    if (!match) return false
-
-    const matchedKeyword = match[1]
-    const userText = match[2]?.trim() || ''
-    if (!matchedKeyword) return false
-
-    const memeKey = await getKeyFunc(matchedKeyword, type)
-    if (!memeKey) return false
-
-    /** 用户权限检查 */
-    if (!this.checkUserAccess(e.user_id)) return false
-
-    /* 黑名单检查 */
-    if (
-      Config.access.blackListEnable &&
-      (await Utils.Tools.isBlacklisted(matchedKeyword))
-    ) {
-      logger.info(
-        `[清语表情] 该表情 "${matchedKeyword}" 在禁用列表中，跳过生成`
-      )
-      return false
-    }
-
-    const params = await Utils.Tools.getParams(memeKey)
-    if (!params) return false
-
-    /* 防误触发 */
-    if (params.min_texts === 0 && params.max_texts === 0 && userText) {
-      const trimmedText = userText.trim()
-      if (
-        !/^(@\s*\d+\s*)+$/.test(trimmedText) &&
-        !/^(#\S+\s+[^#]+(?:\s+#\S+\s+[^#]+)*)$/.test(trimmedText)
-      ) {
+ * 权限检查
+ * @param {Message} e 消息
+ * @returns 是否有权限
+ */
+  async checkUserAccess (e) {
+    if (Config.access.enable) {
+      const userId = e.user_id
+      if (Config.access.mode === 0 && !Config.access.userWhiteList.includes(userId)) {
+        logger.info(`[${Version.Plugin_AliasName}] 用户 ${userId} 不在白名单中，跳过生成`)
+        return false
+      } else if (Config.access.mode === 1 && Config.access.userBlackList.includes(userId)) {
+        logger.info(`[${Version.Plugin_AliasName}] 用户 ${userId} 在黑名单中，跳过生成`)
         return false
       }
-    }
-
-    const extraData = isPreset
-      ? { Preset: await Utils.Tools.getPreseInfo(matchedKeyword) }
-      : {}
-
-    return this.makeMeme(e, memeKey, params, userText, isPreset, extraData)
-  }
-
-  /**
-   * 用户权限检查
-   */
-  checkUserAccess (userId) {
-    if (!Config.access.enable) return true
-
-    if (
-      (Config.access.mode === 0 &&
-        !Config.access.userWhiteList.includes(userId)) ||
-      (Config.access.mode === 1 && Config.access.userBlackList.includes(userId))
-    ) {
-      logger.info(
-        `[${Version.Plugin_AliasName}] 用户 ${userId} 没有权限，跳过生成`
-      )
-      return false
     }
     return true
   }
 
   /**
-   * 调用 Meme 生成方法
-   */
-  async makeMeme (e, memeKey, params, userText, isPreset, extraData) {
-    try {
-      const result = await Meme.make(
-        e,
-        memeKey,
-        params.min_texts,
-        params.max_texts,
-        params.min_images,
-        params.max_images,
-        params.default_texts,
-        params.args_type,
-        userText,
-        isPreset,
-        extraData
-      )
-      await e.reply(segment.image(result), Config.meme.reply)
-      return true
-    } catch (error) {
-      logger.error(error.message)
-      if (Config.meme.errorReply) {
-        await e.reply(
-          `[${Version.Plugin_AliasName}] 生成表情失败, 错误信息: ${error.message}`
-        )
-      }
+ * 禁用表情检查
+ * @param {string} keywordOrKey - 表情关键词或key
+ * @returns 是否在禁用列表中
+ */
+  async checkBlacklisted (keywordOrKey) {
+    if (!Config.access.blackListEnable || Config.access.blackList.length < 0) {
       return false
     }
+    const key = await utils.get_meme_key_by_keyword(keywordOrKey)
+    if (!key) {
+      return false
+    }
+
+    const blacklistKeys = await Promise.all(
+      Config.access.blackList.map(async item => {
+        const convertedKey = await utils.get_meme_key_by_keyword(item)
+        return convertedKey ?? item
+      })
+    )
+
+    if (blacklistKeys.includes(key)) {
+      logger.info(`[${Version.Plugin_AliasName}] 该表情 "${key}" 在禁用列表中，跳过生成`)
+      return true
+    }
+
+    return false
+  }
+
+  /**
+ * 防误触发处理
+ */
+  async checkUserText (min_texts, max_texts, userText) {
+    if (min_texts === 0 && max_texts === 0 && userText) {
+      const trimmedText = userText.trim()
+      if (
+        !/^(@\s*\d+\s*)+$/.test(trimmedText) &&
+      !/^(#\S+\s+[^#]+(?:\s+#\S+\s+[^#]+)*)$/.test(trimmedText)
+      ) {
+        return false
+      }
+    }
+    return true
   }
 }

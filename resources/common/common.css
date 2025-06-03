@@ -13,6 +13,11 @@
   src: url("https://static.wuliya.cn/static/font/HELVETI.woff") format("woff");
   font-display: swap
 }
+@font-face {
+  font-family: "NotoColorEmoji";
+  src: url("https://static.wuliya.cn/static/font/NotoColorEmoji-Regular.ttf") format("truetype");
+  font-display: swap
+}
 
 * {
   margin: 0;
@@ -25,13 +30,13 @@
 
 body {
   color: #1e1f20;
-  font-family: Number, "汉仪文黑-65W", YS, PingFangSC-Medium, "PingFang SC", sans-serif;
+  font-family: Number, YS, PingFangSC-Medium, NotoColorEmoji,  sans-serif;
   transform-origin: 0 0;
-  width: 1440px;
+  width: 100%;
 }
 
 .container {
-  width: 1440px;
+  width: 1800px;
   padding: 20px 15px 10px 15px;
   background-size: contain;
 }

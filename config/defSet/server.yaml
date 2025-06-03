@@ -1,8 +1,25 @@
-# 自定义表情包服务地址
+# 自定义表情服务模式
+# 0: 使用远程服务
+# 1: 使用本地服务
+mode: 0
+
+# 自定义表情服务地址
 url: ''
 
+# 自定义表情服务端口
+# 仅在本地服务模式下生效
+port: 2255
+
 # 请求最大重试次数
-retry: 3
+retry: 5
 
 # 请求超时时间
 timeout: 5
+
+# 服务端下载代理镜像地址
+# 如: https://github.moeyy.xyz
+proxy_url: ''
+
+# 服务端资源下载代理镜像地址
+# 如: https://cdn.mengze.vip/gh/MemeCrafters/meme-generator-rs@
+download_url: ''
