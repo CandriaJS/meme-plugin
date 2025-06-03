@@ -24,8 +24,6 @@
 >meme download
 >```
 
-> [!WARNING]
-> 主体内容已完成，不再更新新内容，已跑路
 
 ## 安装与更新 🔧
 
@@ -63,8 +61,10 @@ pnpm install --filter=meme-plugin
 
 ## 使用帮助 ℹ️
 其他内容请查看 [官方文档](https://docs.wuliya.cn/candria/meme)
-> [!Tip]
-> 如果遇到出现错误可尝试自建后端
+
+## 更新计划 🛠
+
+功能已完成，后续进入功能维护期
 
 ### 表情后端搭建教程 🌟
 <mark>请查看文档</mark>
