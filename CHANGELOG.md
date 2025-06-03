@@ -1,5 +1,12 @@
 # 变更日志
 
+## [1.17.1](https://github.com/CandriaJS/meme-plugin/compare/v1.17.0...v1.17.1) (2025-06-03)
+
+
+### 🔧 其他更新
+
+* 误删仓库，恢复 ([94f4b06](https://github.com/CandriaJS/meme-plugin/commit/94f4b06c1067a8a5e20d263dde24214ad2c7a54e))
+
 ## [1.17.0](https://github.com/CandriaJS/meme-plugin/compare/v1.16.1...v1.17.0) (2025-04-24)
 
 
