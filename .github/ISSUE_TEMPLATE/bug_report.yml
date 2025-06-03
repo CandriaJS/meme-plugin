@@ -1,6 +1,6 @@
 name: 错误报告
 description: 在使用 meme-plugin 的过程中遇到了错误
-title: '[Bug?]: '
+title: '[🐛 Bug]: '
 labels: [ "bug" ]
 
 body:
@@ -11,9 +11,9 @@ body:
   - type: checkboxes
     attributes:
       label: 请确保以下事项
-      description: 您必须勾选以下所有内容，否则您的issue可能会被直接关闭。
+      description: 您必须勾选以下所有内容, 否则您的issue可能会被直接关闭。
       options:
-        - label: 我已经阅读了[文档](https://docs.wuliya.cn/clarity/meme)。
+        - label: 我已经阅读了[文档](https://docs.wuliya.cn/candria/meme)。
         - label: 我确定没有重复的issue或讨论。
         - label: 我确定是`meme-plugin`的问题，而不是其他原因（例如网络，`依赖`或`操作`）。
         - label: 我确定这个问题在最新版本中没有被修复。
@@ -22,7 +22,7 @@ body:
     id: version
     attributes:
       label: 版本
-      description: 您使用的是哪个版本/commit id的源码？请不要使用`latest`或`master`作为答案。
+      description: 您使用的是哪个版本/commit id的源码? 请不要使用`latest`或`master`作为答案。
       placeholder: v0.xx.xx 或者 commit id
     validations:
       required: true

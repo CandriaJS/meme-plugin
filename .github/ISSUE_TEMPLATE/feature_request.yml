@@ -1,6 +1,6 @@
 name: 新功能提议
 description: 希望拥有新的功能
-title: '[功能建议]: '
+title: '[✨ feat]: '
 labels: ["enhancement"]
 
 body:
@@ -9,7 +9,7 @@ body:
       label: 请确保以下事项
       description: 您可以选择多个，甚至全部选择。
       options:
-        - label: 我已经阅读了[文档](https://docs.wuliya.cn/clarity/meme)。
+        - label: 我已经阅读了[文档](https://docs.wuliya.cn/candria/meme)。
         - label: 我确定没有重复的issue或讨论。
         - label: 我确定这个功能没有实现。
         - label: 我相信这是一个合理和普遍的要求。
