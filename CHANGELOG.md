@@ -1,5 +1,23 @@
 # 变更日志
 
+## [2.0.0](https://github.com/CandriaJS/meme-plugin/compare/v1.17.1...v2.0.0) (2025-06-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* 迁移至Rust 表情包Api ([#5](https://github.com/CandriaJS/meme-plugin/issues/5))
+
+### ✨ 新功能
+
+* **plugins:** 重构表情插件并添加新功能 ([099dfff](https://github.com/CandriaJS/meme-plugin/commit/099dfffffc6833ff40aa58210627c88a9296bacf))
+* 迁移至Rust 表情包Api ([#5](https://github.com/CandriaJS/meme-plugin/issues/5)) ([3b9a95c](https://github.com/CandriaJS/meme-plugin/commit/3b9a95c5d9d29cee24253fd68a9b550329bc0665))
+
+
+### 📝 文档更新
+
+* 更新 issue 模板并优化文档链接 ([4cf35ab](https://github.com/CandriaJS/meme-plugin/commit/4cf35ab1b4dbdc70a34e06c6e0896940ed5d6db5))
+* 更新文档信息 ([9110dd0](https://github.com/CandriaJS/meme-plugin/commit/9110dd0495ce5f844985b8f410e4c3dbf11f1e2c))
+
 ## [1.17.1](https://github.com/CandriaJS/meme-plugin/compare/v1.17.0...v1.17.1) (2025-06-03)
 
 
@@ -49,4 +67,3 @@
 ### 🎡 持续集成
 
 * **release:** 更新获取最新标签的命令 ([71afafa](https://github.com/CandriaJS/meme-plugin/commit/71afafaec53a402a2f471fa2653e5eab2e3e18e9))
-
