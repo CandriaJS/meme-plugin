@@ -1,0 +1,65 @@
+{{extend defaultLayout}}
+
+{{block 'css'}}
+<link rel="stylesheet" type="text/css" href="{{_res_path}}/admin/index.css" />
+{{/block}}
+
+{{block 'main'}}
+<div class="info_box">
+  <div class="head-box type{{bgType}}">
+    <div class="label">{{title}} 管理面板</div>
+    <div class="title">#{{title}} 设置</div>
+  </div>
+</div>
+
+{{each schema cfgGroup cfgGroupKey}}
+<div class="cfg-box">
+  <div class="cfg-group">{{cfgGroup.title}}</div>
+  <ul class="cfg-ul">
+    {{set cfgData = cfg[cfgGroupKey] || {} }}
+
+    {{each cfgGroup.cfg cfgItem cfgKey}}
+    <li class="cfg-li">
+      <div class="cfg-line">
+        <span class="cfg-title">{{cfgItem.title}}</span>
+        <span class="cfg-hint">
+          #{{title}} 设置 {{cfgGroup.title}} - {{cfgItem.title}}
+          {{if cfgItem.type === 'number' || cfgItem.type === 'string'}} 默认值: {{cfgItem.def}} 
+          {{else if cfgItem.type === 'list'}} 添加/删除 
+          {{else}} 开启/关闭 
+          {{/if}}
+        </span>
+
+        {{set cfgValue = cfgData[cfgKey] !== undefined ? cfgData[cfgKey] : cfgItem.def}}
+
+        {{if cfgItem.type === 'number'}}
+        <div class="cfg-status">{{cfgValue}}</div>
+
+        {{else if cfgItem.type === 'string'}}
+        <div class="cfg-status {{if cfgValue}}cfg-status{{else}}cfg-status status-off{{/if}}">
+          {{if cfgValue}}已设置{{else}}未设置{{/if}}
+        </div>
+
+        {{else if cfgItem.type === 'list'}}
+        <div class="cfg-status {{if cfgValue && cfgValue.length > 0}}cfg-status{{else}}cfg-status status-off{{/if}}">
+          {{if cfgValue && cfgValue.length > 0}}已配置 {{cfgValue.length}} 项{{else}}未配置{{/if}}
+        </div>
+
+        {{else}} 
+        <div class="cfg-status {{if cfgValue}}cfg-status{{else}}cfg-status status-off{{/if}}">
+          {{if cfgValue}}已开启{{else}}已关闭{{/if}}
+        </div>
+
+        {{/if}}
+      </div>
+
+      {{if cfgItem.desc}}
+      <div class="cfg-desc">{{cfgItem.desc}}</div>
+      {{/if}}
+    </li>
+    {{/each}}
+  </ul>
+</div>
+{{/each}}
+
+{{/block}}

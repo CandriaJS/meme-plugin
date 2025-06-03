@@ -1,0 +1,32 @@
+{{extend defaultLayout}}
+
+{{block 'css'}}
+<link rel="stylesheet" type="text/css" href="{{_res_path}}/code/index.css" />
+{{/block}}
+
+{{block 'main'}}
+<div class="info_box">
+  <div class="label">清语表情更新推送</div>
+  <div class="total">当前分支：{{branchName}}</div>
+  <div class="cfg-box">
+    <ul class="cfg-ul">
+      <li class="cfg-li">
+        <span>提交者：</span>
+        <span>{{commitInfo.committer}}</span>
+      </li>
+      <li class="cfg-li">
+        <span>提交时间：</span>
+        <span>{{commitInfo.commitTime}}</span>
+      </li>
+      <li class="cfg-li">
+        <span>提交标题：</span>
+        <span>{{commitInfo.title}}</span>
+      </li>
+      <li class="cfg-li">
+        <span>提交内容：</span>
+        <span>{{commitInfo.content}}</span>
+      </li>
+    </ul>
+  </div>
+</div>
+{{/block}}

@@ -1,0 +1,23 @@
+# 是否设置为默认表情
+enable: true
+
+# 是否强制使用#触发
+forceSharp: false
+
+# 头像缓存
+cache: true
+
+# 是否开启引用回复
+reply: false
+
+# 是否开启默认使用用户昵称
+userName: false
+
+# 是否开启获取消息中的图片
+imagesInMessage: true
+
+# 是否开启获取引用消息中的图片
+quotedImages: true
+
+# 是否开启表情生成错误回复
+errorReply: true 

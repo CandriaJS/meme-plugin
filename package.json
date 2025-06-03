@@ -1,0 +1,27 @@
+{
+  "name": "meme-plugin",
+  "version": "1.17.0",
+  "author": "ClarityJS",
+  "type": "module",
+  "dependencies": {
+    "axios": "^1.8.4",
+    "axios-retry": "4.5.0",
+    "markdown-it": "^14.1.0",
+    "sequelize": "^6.37.7",
+    "sqlite3": "5.1.6"
+  },
+  "devDependencies": {
+    "eslint": "^9.25.0",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "globals": "^15.15.0",
+    "neostandard": "^0.12.1"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "imports": {
+    "#components": "./components/index.js",
+    "#models": "./models/index.js"
+  }
+}

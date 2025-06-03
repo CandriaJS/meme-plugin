@@ -1,0 +1,20 @@
+{{extend defaultLayout}}
+
+{{block 'css'}}
+<link rel="stylesheet" type="text/css" href="{{_res_path}}/stat/index.css" />
+{{/block}}
+
+{{block 'main'}}
+<div class="info_box">
+  <div class="label">清语表情统计</div>
+  <div class="total">表情调用总次数：{{total}}</div>
+  <div class="cfg-box">
+    {{each emojiList item}}
+      <div class="cfg-item">
+        <div class="emoji-keyword">{{item.keywords}}</div>
+        <div class="emoji-count">{{item.count}} 次</div>
+      </div>
+    {{/each}}
+  </div>
+</div>
+{{/block}}

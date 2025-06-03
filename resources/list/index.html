@@ -1,0 +1,46 @@
+{{extend defaultLayout}}
+
+{{block 'css'}}
+<link rel="stylesheet" type="text/css" href="{{_res_path}}/list/index.css" />
+{{/block}}
+
+{{block 'main'}}
+<main class="meme-container">
+  <header class="meme-header">
+    <h1 class="meme-title">清语表情列表</h1>
+    <p class="meme-count">表情总数：{{total}}</p>
+  </header>
+  
+  <section class="meme-grid">
+    {{if memeList.length > 0}}
+      {{each memeList item index}}
+        {{if index % 50 === 0}}
+          {{if index !== 0}}</ul></section>{{/if}}
+          <section class="meme-column">
+            <ul class="meme-list">
+        {{/if}}
+        <li class="meme-item">
+          <span class="meme-name">
+            {{index + 1}}. {{item.name || '未知表情'}}
+          </span>
+          <div class="meme-icons">
+            {{if item.types && item.types.includes('text')}}
+              <img src="{{_res_path}}/list/imgs/icons/text.svg" alt="文字表情" class="icon" />
+            {{/if}}
+            {{if item.types && item.types.includes('image')}}
+              <img src="{{_res_path}}/list/imgs/icons/image.svg" alt="图片表情" class="icon" />
+            {{/if}}
+            {{if item.types && item.types.includes('arg')}}
+              <img src="{{_res_path}}/list/imgs/icons/arg.svg" alt="参数表情" class="icon" />
+            {{/if}}
+          </div>
+        </li>
+      {{/each}}
+      </ul>
+      </section>
+    {{else}}
+      <p class="meme-empty">暂无表情数据</p>
+    {{/if}}
+  </section>
+</main>
+{{/block}}
