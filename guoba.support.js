@@ -1,8 +1,8 @@
-import { Guoba } from '#models'
+import { guoba } from '#models'
 
 export function supportGuoba () {
   return {
-    pluginInfo: Guoba.pluginInfo,
-    configInfo: Guoba.configInfo
+    pluginInfo: guoba.pluginInfo,
+    configInfo: guoba.configInfo
   }
 }
