@@ -1,0 +1,26 @@
+
+ci:
+    autofix_commit_msg: |
+        [pre-commit.ci] auto fixes from pre-commit.com hooks
+    autofix_prs: true
+    autoupdate_branch: main
+    autoupdate_commit_msg: '[pre-commit.ci] pre-commit autoupdate'
+    autoupdate_schedule: weekly
+    skip: []
+
+repos: 
+  - repo: https://github.com/pre-commit/mirrors-eslint
+    rev: v9.25.0
+    hooks:
+      - id: eslint
+        args: [--fix]
+        files: \.(js)$
+        types: [file]
+        language: node  
+        language_version: 22.13.1
+        additional_dependencies:
+          - eslint@^9.25.0
+          - globals@^15.15.0
+          - neostandard@^0.12.1
+          - eslint-plugin-simple-import-sort@12.1.1
+

@@ -1,0 +1,114 @@
+@font-face {
+  font-family: "Number";
+  src: url("https://static.wuliya.cn/static/font/TTTGB-Number.woff") format("woff");
+  font-display: swap
+}
+@font-face {
+  font-family: "YS";
+  src: url("https://static.wuliya.cn/static/font/HYWH.woff") format("woff");
+  font-display: swap
+}
+@font-face {
+  font-family: "Helvetica";
+  src: url("https://static.wuliya.cn/static/font/HELVETI.woff") format("woff");
+  font-display: swap
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+body {
+  color: #1e1f20;
+  font-family: Number, "汉仪文黑-65W", YS, PingFangSC-Medium, "PingFang SC", sans-serif;
+  transform-origin: 0 0;
+  width: 1440px;
+}
+
+.container {
+  width: 1440px;
+  padding: 20px 15px 10px 15px;
+  background-size: contain;
+}
+
+.head-box {
+  border-radius: 15px;
+  padding: 10px 20px;
+  position: relative;
+  color: #fff;
+  margin-top: 30px;
+}
+
+.head-box .title {
+  font-family: Helvetica;
+  font-style: italic;
+  font-weight: bold;
+  font-size: 36px;
+  text-shadow: 0 0 1px #000, 1px 1px 3px rgba(0, 0, 0, 0.9);
+}
+
+.head-box .title .label {
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.head-box .genshin_logo {
+  position: absolute;
+  top: 1px;
+  right: 15px;
+  width: 97px;
+}
+
+.head-box .label {
+  font-size: 16px;
+  text-shadow: 0 0 1px #000, 1px 1px 3px rgba(0, 0, 0, 0.9);
+}
+
+.head-box .label span {
+  color: #d3bc8e;
+  padding: 0 2px;
+}
+
+.notice {
+  color: #888;
+  font-size: 12px;
+  text-align: right;
+  padding: 12px 5px 5px;
+}
+
+.notice-center {
+  color: #fff;
+  text-align: center;
+  margin-bottom: 10px;
+  text-shadow: 1px 1px 1px #333;
+}
+
+.copyright {
+  font-size: 15px;
+  font-family: Helvetica;
+  font-weight: bold;
+  text-align: center;
+  color: #fff;
+  position: relative;
+  padding-left: 10px;
+  text-shadow: 1px 1px 1px #000;
+  margin: 10px 0;
+}
+.copyright .version {
+  color: #d3bc8e;
+  display: inline-block;
+  padding: 0 3px;
+}
+
+.copyright .commit_id_old {
+  color: #808080;
+}
+
+.copyright .tip {
+  color: #ff0000;
+}

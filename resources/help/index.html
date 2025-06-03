@@ -1,0 +1,42 @@
+{{extend defaultLayout}} {{block 'css'}}
+<link rel="stylesheet" type="text/css" href="{{_res_path}}/help/index.css" />
+ {{@style}} 
+ {{/block}}
+{{block 'main'}}
+
+<div class="info-box">
+  <div class="head-box type{{bgType}}">
+    <div class="title">{{helpCfg.title}}</div>
+    <div class="label">{{helpCfg.subTitle}}</div>
+  </div>
+</div>
+
+{{each helpGroup group}} {{set len = group?.list?.length || 0 }}
+<div class="cont-box">
+  <div class="help-group">{{group.group}}</div>
+  {{if len > 0}}
+  <div class="help-table">
+    <div class="tr">
+      {{each group.list help idx}}
+      <div class="td">
+        <span class="help-icon" {{if help.css}}style="{{help.css}}">{{/if}}</span>
+        <strong class="help-title">{{help.title}}</strong>
+        <span class="help-desc">{{help.desc}}</span>
+      </div>
+      {{if idx%colCount === colCount-1 && idx>0 && idx< len-1}}
+    </div>
+    <div class="tr">
+      {{/if}} 
+      {{/each}} 
+      {{set remainder = (colCount - (len % colCount)) % colCount}}
+      {{if remainder > 0}}
+        {{each [...Array(remainder)] item}}
+          <div class="td"></div>
+        {{/each}}
+      {{/if}}
+    </div>
+  </div>
+  {{/if}}
+</div>
+
+{{/each}} {{/block}}

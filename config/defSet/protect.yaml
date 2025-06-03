@@ -1,0 +1,14 @@
+# 是否开启表情保护
+enable: false
+
+# 主人保护
+master: false
+
+# 是否开启用户保护
+userEnable: false
+
+# 其他用户保护列表
+user: []
+
+# 表情保护列表
+list: []

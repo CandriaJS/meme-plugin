@@ -1,0 +1,17 @@
+# 图片渲染精度
+renderScale: 100
+
+# 是否开启每日自动更新表情包数据
+autoUpdateRes: true
+
+# 自动更新资源Cron
+autoUpdateResCron: "0 0 2 * * ?"
+
+# 自动更新
+autoUpdate: false
+
+# 自动更新Cron
+autoUpdateCron: "0 0 1 * * ?"
+
+# 劫持土块表情包
+hijackRes: true
