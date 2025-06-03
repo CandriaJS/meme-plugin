@@ -1,0 +1,130 @@
+body {
+    background-image: url('./imgs/bg.webp');
+}
+.info_box {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 15px;
+  padding: 20px;
+  margin: 20px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.head-box {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.head-box .title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.head-box .label {
+  font-size: 16px;
+  color: #666;
+}
+
+.card-container {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+}
+
+.header-card {
+  background: linear-gradient(135deg, #6e8efb, #a777e3);
+  border-radius: 15px;
+  padding: 30px;
+  text-align: center;
+  color: white;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.header-card .title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.header-card .subtitle {
+  font-size: 16px;
+  opacity: 0.9;
+}
+
+.status-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.status-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.status-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.card-icon {
+  font-size: 32px;
+  margin-bottom: 15px;
+}
+
+.card-label {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.card-value {
+  color: #333;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .status-grid {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 15px;
+  }
+  
+  .header-card {
+    padding: 20px;
+  }
+  
+  .header-card .title {
+    font-size: 24px;
+  }
+}
+
+.status-item {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s;
+}
+
+.status-item:hover {
+  transform: translateY(-2px);
+}
+
+.status-label {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.status-value {
+  font-size: 18px;
+  color: #333;
+  font-weight: bold;
+}

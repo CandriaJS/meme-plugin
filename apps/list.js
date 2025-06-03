@@ -1,15 +1,15 @@
 import { Config, Render, Version } from '#components'
-import { Utils } from '#models'
+import { utils } from '#models'
 
 export class list extends plugin {
   constructor () {
     super({
-      name: '清语表情:列表',
+      name: '柠糖表情:列表',
       event: 'message',
       priority: -Infinity,
       rule: [
         {
-          reg: /^#?(?:(清语)?表情|meme(?:-plugin)?)列表$/i,
+          reg: /^#?(?:(?:柠糖)?(?:表情|(?:meme(?:s)?)))列表$/i,
           fnc: 'list'
         }
       ]
@@ -19,36 +19,34 @@ export class list extends plugin {
   async list (e) {
     if (!Config.meme.enable) return false
     try {
-      const keys = await Utils.Tools.getAllKeys()
-
+      const keys = await utils.get_meme_all_keys()
       if (!keys || keys.length === 0) {
-        await e.reply(`[${Version.Plugin_AliasName}]没有找到表情列表, 请使用[#清语表情更新资源], 稍后再试`, true)
+        await e.reply(`[${Version.Plugin_AliasName}]没有找到表情列表, 请使用[#柠糖表情更新资源], 稍后再试`, true)
         return true
       }
-
       const tasks = keys.map(async (key) => {
-        const keyWords = await Utils.Tools.getKeyWords(key) ?? null
-        const params = await Utils.Tools.getParams(key) ?? null
+        const keywords = await utils.get_meme_keyword(key) ?? []
+        const params = await utils.get_meme_info(key)
 
-        const { min_texts = 0, min_images = 0, args_type = null } = params
-
+        const min_texts = params?.min_texts ?? 0
+        const min_images = params?.min_images ?? 0
+        const options = params?.options ?? null
         const types = []
         if (min_texts >= 1) types.push('text')
         if (min_images >= 1) types.push('image')
-        if (args_type !== null) types.push('arg')
+        if (options !== null) types.push('option')
 
-        if (keyWords) {
-          return keyWords.map(keyword => ({
-            name: keyword,
+        if (keywords.length > 0) {
+          return {
+            name: keywords.join('/'),
             types
-          }))
+          }
         }
 
         return []
       })
-
       const memeList = (await Promise.all(tasks)).flat()
-      const total = memeList.length
+      const total = keys.length
 
       const img = await Render.render(
         'list/index',
@@ -60,9 +58,7 @@ export class list extends plugin {
       await e.reply(img)
       return true
     } catch (error) {
-      logger.error('加载表情列表失败:', error)
-      await e.reply('加载表情列表失败，请稍后重试', true)
-      return true
+      logger.error(error)
     }
   }
 }

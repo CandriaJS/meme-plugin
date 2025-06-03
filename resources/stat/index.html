@@ -5,15 +5,15 @@
 {{/block}}
 
 {{block 'main'}}
-<div class="info_box">
-  <div class="label">清语表情统计</div>
-  <div class="total">表情调用总次数：{{total}}</div>
-  <div class="cfg-box">
-    {{each emojiList item}}
-      <div class="cfg-item">
-        <div class="emoji-keyword">{{item.keywords}}</div>
-        <div class="emoji-count">{{item.count}} 次</div>
-      </div>
+<div class="stat-container">
+  <h1 class="stat-title">柠糖表情统计</h1>
+  <div class="stat-total">表情调用总次数：{{total}}</div>
+  <div class="stat-list">
+    {{each memeList item}}
+    <div class="stat-item">
+      <div class="stat-keyword">{{item.keywords}}</div>
+      <div class="stat-count">{{item.count}} 次</div>
+    </div>
     {{/each}}
   </div>
 </div>

@@ -31,13 +31,14 @@ export const Render = {
       },
       copyright: `${Version.Bot_Name}<span class="version"> ${Version.Bot_Version}</span> & ${Version.Plugin_Name}<span class="version"> ${Version.Plugin_Version}`,
       pageGotoParams: {
-        waitUntil: 'load',
+        waitUntil: 'networkidle0',
         timeout: 60000
       },
       tplFile: `${Version.Plugin_Path}/resources/${path}.html`,
       pluResPath: `${Version.Plugin_Path}/resources/`,
       saveId: path.split('/').pop(),
       imgType: 'jpeg',
+      multiPage: true,
       multiPageHeight: 12000,
       ...params
     }

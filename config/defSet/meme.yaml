@@ -13,11 +13,8 @@ reply: false
 # 是否开启默认使用用户昵称
 userName: false
 
-# 是否开启获取消息中的图片
-imagesInMessage: true
-
-# 是否开启获取引用消息中的图片
-quotedImages: true
-
 # 是否开启表情生成错误回复
 errorReply: true 
+
+# 自定义错误回复前缀
+perfix: ''

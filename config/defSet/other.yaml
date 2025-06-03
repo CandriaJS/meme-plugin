@@ -7,11 +7,5 @@ autoUpdateRes: true
 # 自动更新资源Cron
 autoUpdateResCron: "0 0 2 * * ?"
 
-# 自动更新
-autoUpdate: false
-
-# 自动更新Cron
-autoUpdateCron: "0 0 1 * * ?"
-
 # 劫持土块表情包
 hijackRes: true

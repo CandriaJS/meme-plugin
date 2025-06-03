@@ -22,27 +22,21 @@ export default [
     bottomHelpMessage: '是否开启引用回复'
   },
   {
-    field: 'meme.userName',
-    label: '用户昵称',
-    component: 'Switch',
-    bottomHelpMessage: '是否开启默认使用用户昵称'
-  },
-  {
     field: 'meme.forceSharp',
     label: '强制触发',
     component: 'Switch',
     bottomHelpMessage: '是否强制使用#触发, 开启后必须使用#触发'
   },
   {
-    field: 'meme.quotedImages',
-    label: '引用图片',
-    component: 'Switch',
-    bottomHelpMessage: '是否开启获取引用消息中的图片'
-  },
-  {
     field: 'meme.errorReply',
     label: '错误回复',
     component: 'Switch',
     bottomHelpMessage: '是否开启错误信息回复'
+  },
+  {
+    field: 'meme.perfix',
+    label: '前缀',
+    component: 'Input',
+    bottomHelpMessage: '自定义错误输出前缀'
   }
 ]

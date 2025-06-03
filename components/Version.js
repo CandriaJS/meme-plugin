@@ -50,7 +50,7 @@ export const Version = {
     return Plugin_Name
   },
   get Plugin_AliasName () {
-    return '清语表情'
+    return '柠糖表情'
   },
   get Plugin_Version () {
     return pkg.version

@@ -5,7 +5,6 @@ import chokidar from 'chokidar'
 import _ from 'lodash'
 
 import cfg from '../../../lib/config/config.js'
-import cfgSchema from '../config/system/cfg_system.js'
 import { Version } from './Version.js'
 import { YamlReader } from './YamlReader.js'
 
@@ -76,7 +75,7 @@ class Cfg {
       delete this.config[key]
       this.config[key] = new YamlReader(file).jsonData
 
-      logger.mark(`[清语表情][修改配置文件][${type}][${name}]`)
+      logger.mark(`[柠糖表情][修改配置文件][${type}][${name}]`)
 
       const changes = this.findDifference(oldConfig, this.config[key])
       for (const key in changes) {
@@ -101,11 +100,6 @@ class Cfg {
         configData[name] = this.getDefOrConfig(name)
         return configData
       }, {})
-  }
-
-  /** 获取配置 Schema 映射 */
-  getCfgSchemaMap () {
-    return _.cloneDeep(cfgSchema)
   }
 
   /** 修改配置 */

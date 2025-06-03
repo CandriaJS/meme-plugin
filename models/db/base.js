@@ -1,15 +1,12 @@
-import fs from 'node:fs'
-
 import chalk from 'chalk'
+import fs from 'fs/promises'
 import { col, DataTypes, fn, literal, Op, Sequelize } from 'sequelize'
 
 import { Version } from '#components'
-
-import * as Utils from '../Utils/index.js'
-
+import { utils } from '#models'
 const dbPath = `${Version.Plugin_Path}/data`
-if (!await Utils.Common.fileExistsAsync(dbPath)) {
-  fs.mkdirSync(dbPath)
+if (!await utils.exists(dbPath)) {
+  await fs.mkdir(dbPath)
 }
 
 const sequelize = new Sequelize({
