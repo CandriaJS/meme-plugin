@@ -8,7 +8,7 @@ export class restart extends plugin {
       priority: -Infinity,
       rule: [
         {
-          reg: /^#?(?:(?:柠糖)(?:表情|meme))(?:重启|重新启动)(?:表情)?(?:服务端)?$/i,
+          reg: /^#?(?:(?:柠糖)(?:表情|meme))(?:重启|重新启动)(?:表情)?(?:服务端)$/i,
           fnc: 'restart'
         }
       ]

@@ -6,6 +6,9 @@ import AdmZip from 'adm-zip'
 import { Config, Version } from '#components'
 import { imageTool, utils } from '#models'
 
+const getType = Config.server.usebase64 ? 'base64' : 'url'
+const uploadType = Config.server.usebase64 ? 'data' : 'url'
+
 export class ImageTools extends plugin {
   constructor () {
     super({
@@ -71,15 +74,8 @@ export class ImageTools extends plugin {
 
   async flip_horizontal (e) {
     try {
-      let avatar, image, image_id
-      avatar = await utils.get_user_avatar(e, e.at, 'url')
-      if (avatar) {
-        const type = Number(Config.server.mode) === 1 && Config.meme.cache ? 'path' : 'url'
-        image_id = await utils.upload_image(avatar.avatar, type)
-      } else {
-        image = await utils.get_image(e)
-        image_id = image && image.length > 0 ? await utils.upload_image(image[0].image) : null
-      }
+      const image = await utils.get_image(e, getType)
+      const image_id = image && image.length > 0 ? await utils.upload_image(image[0].image, uploadType) : null
 
       if (!image_id) {
         return await e.reply('请发送图片', { reply: true })
@@ -98,15 +94,8 @@ export class ImageTools extends plugin {
 
   async flip_vertical (e) {
     try {
-      let avatar, image, image_id
-      avatar = await utils.get_user_avatar(e, e.at, 'url')
-      if (avatar) {
-        const type = Number(Config.server.mode) === 1 && Config.meme.cache ? 'path' : 'url'
-        image_id = await utils.upload_image(avatar.avatar, type)
-      } else {
-        image = await utils.get_image(e)
-        image_id = image && image.length > 0 ? await utils.upload_image(image[0].image) : null
-      }
+      const image = await utils.get_image(e, getType)
+      const image_id = image && image.length > 0 ? await utils.upload_image(image[0].image, uploadType) : null
 
       if (!image_id) {
         return await e.reply('请发送图片', { reply: true })
@@ -128,15 +117,8 @@ export class ImageTools extends plugin {
   async rotate (e) {
     try {
       const [ , angle ] = e.msg.match(this.rule[2].reg)
-      let avatar, image, image_id
-      avatar = await utils.get_user_avatar(e, e.at, 'url')
-      if (avatar) {
-        const type = Number(Config.server.mode) === 1 && Config.meme.cache ? 'path' : 'url'
-        image_id = await utils.upload_image(avatar.avatar, type)
-      } else {
-        image = await utils.get_image(e)
-        image_id = image && image.length > 0 ? await utils.upload_image(image[0].image) : null
-      }
+      const image = await utils.get_image(e, getType)
+      const image_id = image && image.length > 0 ? await utils.upload_image(image[0].image, uploadType) : null
 
       if (!image_id) {
         return await e.reply('请发送图片', { reply: true })
@@ -159,15 +141,8 @@ export class ImageTools extends plugin {
   async resize (e) {
     try {
       const [ , width, height ] = e.msg.match(this.rule[3].reg)
-      let avatar, image, image_id
-      avatar = await utils.get_user_avatar(e, e.at, 'url')
-      if (avatar) {
-        const type = Number(Config.server.mode) === 1 && Config.meme.cache ? 'path' : 'url'
-        image_id = await utils.upload_image(avatar.avatar, type)
-      } else {
-        image = await utils.get_image(e)
-        image_id = image && image.length > 0 ? await utils.upload_image(image[0].image) : null
-      }
+      const image = await utils.get_image(e, getType)
+      const image_id = image && image.length > 0 ? await utils.upload_image(image[0].image, uploadType) : null
 
       if (!image_id) {
         return await e.reply('请发送图片', { reply: true })
@@ -208,15 +183,8 @@ export class ImageTools extends plugin {
   async crop (e) {
     try {
       const [ , cropParam ] = e.msg.match(this.rule[4].reg)
-      let avatar, image, image_id
-      avatar = await utils.get_user_avatar(e, e.at, 'url')
-      if (avatar) {
-        const type = Number(Config.server.mode) === 1 && Config.meme.cache ? 'path' : 'url'
-        image_id = await utils.upload_image(avatar.avatar, type)
-      } else {
-        image = await utils.get_image(e)
-        image_id = image && image.length > 0 ? await utils.upload_image(image[0].image) : null
-      }
+      const image = await utils.get_image(e, getType)
+      const image_id = image && image.length > 0 ? await utils.upload_image(image[0].image, uploadType) : null
 
       if (!image_id) {
         return await e.reply('请发送图片', { reply: true })
@@ -278,15 +246,8 @@ export class ImageTools extends plugin {
   }
   async grayscale (e) {
     try {
-      let avatar, image, image_id
-      avatar = await utils.get_user_avatar(e, e.at, 'url')
-      if (avatar) {
-        const type = Number(Config.server.mode) === 1 && Config.meme.cache ? 'path' : 'url'
-        image_id = await utils.upload_image(avatar.avatar, type)
-      } else {
-        image = await utils.get_image(e)
-        image_id = image && image.length > 0 ? await utils.upload_image(image[0].image) : null
-      }
+      const image = await utils.get_image(e, getType)
+      const image_id = image && image.length > 0 ? await utils.upload_image(image[0].image, uploadType) : null
 
       if (!image_id) {
         return await e.reply('请发送图片', { reply: true })
@@ -307,15 +268,8 @@ export class ImageTools extends plugin {
 
   async invert (e) {
     try {
-      let avatar, image, image_id
-      avatar = await utils.get_user_avatar(e, e.at, 'url')
-      if (avatar) {
-        const type = Number(Config.server.mode) === 1 && Config.meme.cache ? 'path' : 'url'
-        image_id = await utils.upload_image(avatar.avatar, type)
-      } else {
-        image = await utils.get_image(e)
-        image_id = image && image.length > 0 ? await utils.upload_image(image[0].image) : null
-      }
+      const image = await utils.get_image(e, getType)
+      const image_id = image && image.length > 0 ? await utils.upload_image(image[0].image, uploadType) : null
 
       if (!image_id) {
         return await e.reply('请发送图片', { reply: true })
@@ -334,12 +288,12 @@ export class ImageTools extends plugin {
 
   async merge_horizontal (e) {
     try {
-      const images = await utils.get_image(e, 'url')
+      const images = await utils.get_image(e, getType)
       if (!images || images.length < 2) {
         return await e.reply('请发送至少两张图片进行合并', true)
       }
       const image_ids = await Promise.all(
-        images.map((img) => utils.upload_image(img.image))
+        images.map((img) => utils.upload_image(img.image, uploadType))
       )
       const reslut = await imageTool.merge_horizontal(image_ids)
       await e.reply([
@@ -357,12 +311,12 @@ export class ImageTools extends plugin {
 
   async merge_vertical (e) {
     try {
-      const images = await utils.get_image(e, 'url')
+      const images = await utils.get_image(e, getType)
       if (!images || images.length < 2) {
         return await e.reply('请发送至少两张图片进行垂直拼接', true)
       }
       const image_ids = await Promise.all(
-        images.map((img) => utils.upload_image(img.image))
+        images.map((img) => utils.upload_image(img.image, uploadType))
       )
       const reslut = await imageTool.merge_vertical(image_ids)
       await e.reply([
@@ -379,11 +333,11 @@ export class ImageTools extends plugin {
   }
   async gif_split (e) {
     try {
-      const image = await utils.get_image(e, 'url')
+      const image = await utils.get_image(e, getType)
       if (!image) {
         return await e.reply('请发送图片', true)
       }
-      const image_id = await utils.upload_image(image[0].image)
+      const image_id = await utils.upload_image(image[0].image, uploadType)
       const reslut = await imageTool.gif_split(image_id)
 
       const images = await Promise.all(
@@ -462,12 +416,12 @@ export class ImageTools extends plugin {
 
   async gif_merge (e) {
     try {
-      const images = await utils.get_image(e, 'url')
+      const images = await utils.get_image(e, getType)
       if (!images || images.length < 2) {
         return await e.reply('请发送至少两张图片进行拼接', true)
       }
       const image_ids = await Promise.all(
-        images.map((img) => utils.upload_image(img.image))
+        images.map((img) => utils.upload_image(img.image, uploadType))
       )
       const reslut = await imageTool.gif_merge(image_ids)
       await e.reply([
@@ -485,11 +439,11 @@ export class ImageTools extends plugin {
 
   async gif_reverse (e) {
     try {
-      const image = await utils.get_image(e, 'url')
+      const image = await utils.get_image(e, getType)
       if (!image) {
         return await e.reply('请发送图片', true)
       }
-      const image_id = await utils.upload_image(image[0].image)
+      const image_id = await utils.upload_image(image[0].image, uploadType)
       const reslut = await imageTool.gif_reverse(image_id)
       await e.reply([
         segment.image(
@@ -507,7 +461,7 @@ export class ImageTools extends plugin {
   async gif_change_duration (e) {
     try {
       const [ , param ] = e.msg.match(this.rule[12].reg)
-      const image = await utils.get_image(e, 'url')
+      const image = await utils.get_image(e, getType)
       if (!image) {
         return await e.reply('请发送图片', true)
       }
@@ -517,7 +471,7 @@ export class ImageTools extends plugin {
           true
         )
       }
-      const image_id = await utils.upload_image(image[0].image)
+      const image_id = await utils.upload_image(image[0].image, uploadType)
       const image_info = await imageTool.get_image_info(image_id)
       if (!image_info.is_multi_frame) {
         return await e.reply('该图片不是动图,无法进行变速操作', true)
@@ -543,7 +497,7 @@ export class ImageTools extends plugin {
         } else if (percent_match) {
           duration = duration * (100 / parseFloat(percent_match[1]))
         } else {
-          return await e.reply('请使用正确的倍率格式,如:0.5x,50%,20FPS,0.05s')
+          return await e.reply('请使用正确的倍率格式,如:[0.5x],[50%],[20FPS],[0.05s]', true)
         }
       }
 
