@@ -409,7 +409,7 @@ export async function get_meme_preview (key) {
     const url = await get_base_url()
     const res = await Request.get(`${url}/memes/${key}/preview`)
     if (!res.success) throw new Error(res.msg)
-    const image = await imageTool.get_image(res.data.image_id)
+    const image = await imageTool.get_image(res.data.image_id, 'base64')
     return image
   } catch (error) {
     logger.error(error)
