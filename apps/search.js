@@ -1,4 +1,4 @@
-import { Config, Version } from '#components'
+import { Config } from '#components'
 import { utils } from '#models'
 
 export class search extends plugin {

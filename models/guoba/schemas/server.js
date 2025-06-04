@@ -38,6 +38,12 @@ export default [
     }
   },
   {
+    field: 'server.usebase64',
+    label: 'base64上传',
+    component: 'Switch',
+    bottomHelpMessage: '是否开启使用base64上传图片'
+  },
+  {
     field: 'server.retry',
     label: '重试次数',
     component: 'InputNumber',

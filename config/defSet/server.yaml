@@ -10,6 +10,9 @@ url: ''
 # 仅在本地服务模式下生效
 port: 2255
 
+# 是否使用base64上传图片
+usebase64: false
+
 # 请求最大重试次数
 retry: 5
 
