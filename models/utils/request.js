@@ -153,7 +153,11 @@ class Request {
     if (axios.isAxiosError(error)) {
       let errorMessage
 
-      if (error.response?.data) {
+      if (error.code === 'ECONNABORTED') {
+        errorMessage = '请求超时，请检查网络连接'
+      } else if (error.code === 'ERR_NETWORK') {
+        errorMessage = '网络连接异常, 请检查网络连接'
+      } else if (error.response?.data) {
         if (Buffer.isBuffer(error.response.data)) {
           errorMessage = error.response.data.toString()
         } else if (typeof error.response.data === 'string') {
@@ -163,13 +167,15 @@ class Request {
         }
       } else if (error.response?.statusText) {
         errorMessage = error.response.statusText.toString()
+      } else if (error.message) {
+        errorMessage = error.message
       } else {
-        errorMessage = '未知错误'
+        errorMessage = '未知网络错误'
       }
 
       return errorMessage
     } else {
-      return error
+      return error?.message ?? error
     }
   }
 }
