@@ -62,10 +62,9 @@ export class info extends plugin {
 
       try {
         const previewImage = await utils.get_meme_preview(memeKey)
-        const base64Data = await utils.getImageBase64(previewImage)
         if (previewImage) {
           replyMessage.push('\n预览图片:\n')
-          replyMessage.push(segment.image(previewImage))
+          replyMessage.push(segment.image(`base64://${previewImage}`))
         }
       } catch (error) {
         replyMessage.push('\n预览图片:\n')
