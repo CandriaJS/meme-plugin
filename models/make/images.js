@@ -23,7 +23,7 @@ export async function handleImages (
 
   const imagePromises = messageImages.map(async (msgImage) => {
     const [ image, name ] = await Promise.all([
-      utils.upload_image(msgImage.image, getType),
+      utils.upload_image(msgImage.image, uploadType),
       utils.get_user_name(e, msgImage.userId)
     ])
     return {
