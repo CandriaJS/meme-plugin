@@ -13,11 +13,12 @@ export async function handleImages (
 ) {
   let images = []
   const getType = Config.server.usebase64 ? 'base64' : 'url'
-  const uploadType = Config.server.usebase64
+  const AvatarUploadType = Config.server.usebase64
     ? 'data'
     : Number(Config.server.mode) === 1 && Config.meme.cache
       ? 'path'
       : 'url'
+  const uploadType = Config.server.usebase64 ? 'data' : 'url'
   const messageImages = await utils.get_image(e, getType)
   let userAvatars = []
 
@@ -42,7 +43,7 @@ export async function handleImages (
       }
     }
 
-    const image = await utils.upload_image(avatar.avatar, uploadType)
+    const image = await utils.upload_image(avatar.avatar, AvatarUploadType)
 
     if (image) {
       userAvatars.push({
@@ -62,7 +63,7 @@ export async function handleImages (
       }
     }
 
-    const image = await utils.upload_image(avatar.avatar, uploadType)
+    const image = await utils.upload_image(avatar.avatar, AvatarUploadType)
 
     if (image) {
       userAvatars.push({
@@ -84,7 +85,7 @@ export async function handleImages (
       }
     }
 
-    const image = await utils.upload_image(avatar.avatar, uploadType)
+    const image = await utils.upload_image(avatar.avatar, AvatarUploadType)
 
     if (image) {
       userAvatars.push({
@@ -103,7 +104,7 @@ export async function handleImages (
       }
     }
 
-    const image = await utils.upload_image(avatar.avatar, uploadType)
+    const image = await utils.upload_image(avatar.avatar, AvatarUploadType)
 
     if (image) {
       userAvatars.unshift({
