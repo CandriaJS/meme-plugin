@@ -76,7 +76,7 @@ export async function handleImages (
    * 特殊处理：当 min_images === 1 时，因没有多余的图片，表情保护功能会失效
    */
   if (min_images === 1 && messageImages.length === 0) {
-    let avatar = await utils.get_user_avatar(e, e.user_id, 'url')
+    let avatar = await utils.get_user_avatar(e, e.user_id, getType)
     if (!avatar) {
       return {
         success: false,
