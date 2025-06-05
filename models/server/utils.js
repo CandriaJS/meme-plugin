@@ -34,6 +34,34 @@ function formatRuntime (diffMs) {
   return runtime
 }
 
+/*
+ * 获取本地IP地址
+ * @returns 本地IP地址
+ */
+export async function get_local_ip () {
+  const interfaces = os.networkInterfaces()
+
+  for (const devName in interfaces) {
+    const iface = interfaces[devName]
+    if (!iface) continue
+
+    for (const alias of iface) {
+      if (!alias) continue
+
+      if (
+        alias.family === 'IPv4' &&
+       alias.address !== '127.0.0.1' &&
+       !alias.internal
+      ) {
+        return alias.address
+      }
+    }
+  }
+
+  return Promise.resolve('127.0.0.1')
+}
+
+
 /**
  * 重启表情服务端
  * @returns 重启结果
