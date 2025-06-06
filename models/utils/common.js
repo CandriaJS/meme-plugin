@@ -63,17 +63,24 @@ export async function getImageBase64 (image) {
 export async function get_base_url () {
   try {
     let base_url
-    if (!Config.server.url && !(Config.server.mode === 1)) throw new Error('请先使用未配置表情包API或使用本地服务')
+    if (!Config.server.url && !(Config.server.mode === 1))
+      throw new Error('请先使用未配置表情包API或使用本地服务')
     switch (Number(Config.server.mode)) {
       case 0:
         base_url = Config.server.url.replace(/\/+$/, '')
         break
-      case 1:{
-        const resources_path = path.join(os.homedir(), '.meme_generator', 'resources')
+      case 1: {
+        const resources_path = path.join(
+          os.homedir(),
+          '.meme_generator',
+          'resources'
+        )
         if (!(await exists(resources_path))) {
           throw new Error('请先使用[#柠糖表情下载表情服务端资源]')
         }
-        base_url = `http://${await server.get_local_ip()}:${Config.server.port}`
+        base_url = `http://${await server.get_local_ip()}:${
+          Config.server.port
+        }`
         break
       }
       default:
@@ -105,9 +112,7 @@ export async function isAbroad () {
     )
     const traceTexts = responses.map((res) => res.data).filter(Boolean)
     const traceLines = traceTexts
-      .flatMap((text) =>
-        text.split('\n').filter((line) => line)
-      )
+      .flatMap((text) => text.split('\n').filter((line) => line))
       .map((line) => line.split('='))
 
     const traceMap = Object.fromEntries(traceLines)
@@ -125,11 +130,7 @@ export async function isAbroad () {
  * @returns {Promise<{userId:string,avatar:string} | null>}用户头像
  */
 
-export async function get_user_avatar (
-  e,
-  userId,
-  type = 'url'
-) {
+export async function get_user_avatar (e, userId, type = 'url') {
   try {
     if (!e) throw new Error('消息事件不能为空')
     if (!userId) throw new Error('用户ID不能为空')
@@ -145,8 +146,7 @@ export async function get_user_avatar (
           const friend = e.bot.pickFriend(userId)
           avatarUrl = await friend.getAvatarUrl()
         }
-      } catch (err) {
-      }
+      } catch (err) {}
       if (!avatarUrl) {
         throw new Error(`获取用户头像地址失败: ${userId}`)
       }
@@ -156,7 +156,11 @@ export async function get_user_avatar (
     const avatarDir = path.join(Version.Plugin_Path, 'data', 'avatar')
     const cachePath = path.join(avatarDir, `${userId}.png`).replace(/\\/g, '/')
 
-    if (Config.meme.cache && Number(Config.server.mode) === 1 && await exists(cachePath)) {
+    if (
+      Config.meme.cache &&
+      Number(Config.server.mode) === 1 &&
+      (await exists(cachePath))
+    ) {
       const avatarUrl = await getAvatarUrl(e, userId)
       if (!avatarUrl) throw new Error(`获取用户头像失败: ${userId}`)
       const headRes = await Request.head(avatarUrl)
@@ -165,8 +169,7 @@ export async function get_user_avatar (
 
       if (new Date(lastModified) <= cacheStat.mtime) {
         switch (type) {
-          case 'base64':
-          {
+          case 'base64': {
             const data = await fs.readFile(cachePath)
             if (!data) throw new Error(`通过缓存获取用户头像失败: ${userId}`)
             return {
@@ -187,7 +190,11 @@ export async function get_user_avatar (
     const avatarUrl = await getAvatarUrl(e, userId)
     if (!avatarUrl) throw new Error(`获取用户头像失败: ${userId}`)
 
-    if (Config.meme.cache && Number(Config.server.mode) === 1 && !await exists(avatarDir)) {
+    if (
+      Config.meme.cache &&
+      Number(Config.server.mode) === 1 &&
+      !(await exists(avatarDir))
+    ) {
       await fs.mkdir(avatarDir)
     }
 
@@ -208,7 +215,10 @@ export async function get_user_avatar (
       default:
         return {
           userId,
-          avatar: Config.meme.cache && Number(Config.server.mode) === 1 ? cachePath : avatarUrl
+          avatar:
+            Config.meme.cache && Number(Config.server.mode) === 1
+              ? cachePath
+              : avatarUrl
         }
     }
   } catch (error) {
@@ -249,17 +259,13 @@ export async function get_user_name (e, userId) {
   }
 }
 
-
 /**
  * 获取图片
  * @param {Message} e 消息事件
  * @param {'url' | 'base64'} type 返回类型 url 或 base64
  * @returns {Promise<Array<{userId: string, image: string}>>} 图片数组信息
  */
-export async function get_image (
-  e,
-  type = 'url'
-) {
+export async function get_image (e, type = 'url') {
   if (!e) throw new Error('消息事件不能为空')
   const imagesInMessage = e.message
     .filter((m) => m.type === 'image')
@@ -268,17 +274,23 @@ export async function get_image (
       url: img.url
     }))
 
+  const replyId = e.reply_id ?? e.message.find((m) => m.type === 'reply')?.id
+
   const tasks = []
 
   let quotedImages = []
   let source = null
-  if (e.reply_id) {
+  if (e.getReply) {
     source = await e.getReply()
-  } else if (e.source) {
+  } else if (replyId) {
     if (e.isGroup) {
-      source = await Bot[e.self_id].pickGroup(e.group_id).getChatHistory(e.reply_id ?? e.source.seq, 1)
+      source = await Bot[e.self_id]
+        .pickGroup(e.group_id)
+        .getChatHistory(e.source.seq || replyId, 1)
     } else if (e.isPrivate) {
-      source = await Bot[e.self_id].pickFriend(e.user_id).getChatHistory((Math.floor(Date.now() / 1000)), 1)
+      source = await Bot[e.self_id]
+        .pickFriend(e.user_id)
+        .getChatHistory(Math.floor(Date.now() / 1000), 1)
     }
   }
 
@@ -305,17 +317,21 @@ export async function get_image (
     for (const item of quotedImages) {
       switch (type) {
         case 'url':
-          tasks.push(Promise.resolve({
-            userId: item.userId,
-            image: item.url.toString()
-          }))
+          tasks.push(
+            Promise.resolve({
+              userId: item.userId,
+              image: item.url.toString()
+            })
+          )
           break
         case 'base64':
         default:
-          tasks.push(Promise.resolve({
-            userId: item.userId,
-            image: await getImageBase64(item.url)
-          }))
+          tasks.push(
+            Promise.resolve({
+              userId: item.userId,
+              image: await getImageBase64(item.url)
+            })
+          )
           break
       }
     }
@@ -345,9 +361,8 @@ export async function get_image (
 
   const results = await Promise.allSettled(tasks)
   const images = results
-    .filter((res) =>
-      res.status === 'fulfilled' && Boolean(res.value))
-    .map(res => res.value)
+    .filter((res) => res.status === 'fulfilled' && Boolean(res.value))
+    .map((res) => res.value)
 
   return images
 }
