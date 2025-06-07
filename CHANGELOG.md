@@ -1,5 +1,33 @@
 # 变更日志
 
+## [2.1.0](https://github.com/CandriaJS/meme-plugin/compare/v2.0.1...v2.1.0) (2025-06-06)
+
+
+### ✨ 新功能
+
+* **server:** 动态获取本地 IP 地址 ([707d6db](https://github.com/CandriaJS/meme-plugin/commit/707d6dba6a5c09fda515efb57ac2f21523db495e))
+* **server:** 添加 base64 上传功能 ([c07b48f](https://github.com/CandriaJS/meme-plugin/commit/c07b48faddfbe26517d19681eff9e71f04e7961a))
+* **server:** 添加端口占用检查和进程杀死功能 ([9120261](https://github.com/CandriaJS/meme-plugin/commit/9120261a4bf8057b77fbc911e955057fac8628df))
+
+
+### 🐛 错误修复
+
+* **info:** 修复 meme 预览图片无法显示的问题 ([a6cd941](https://github.com/CandriaJS/meme-plugin/commit/a6cd94112f1d0af3ffccfe6dc08c267a9bd3d311))
+* **models:** 优化网络错误处理逻辑 ([0b7c1c6](https://github.com/CandriaJS/meme-plugin/commit/0b7c1c6770ab64d298c2c141b2727a0886d3aab9))
+* **models:** 修复头像缓存逻辑 ([bb4cad7](https://github.com/CandriaJS/meme-plugin/commit/bb4cad70d1a8c1f57b6b2ee73928fd4d21799334))
+* 传入1张图的头像处理 ([acc481f](https://github.com/CandriaJS/meme-plugin/commit/acc481fe4fcb7fc360d3107dacf40b54312bba12))
+* 修正消息段输出 ([4a094fe](https://github.com/CandriaJS/meme-plugin/commit/4a094feed18c415e500b4b09712d6d3e5ddd1e02))
+* 图片上传 ([c852d36](https://github.com/CandriaJS/meme-plugin/commit/c852d36d47220ba9685fc0afae4ffe20a5703cbe))
+* 服务端状态正则 ([26afb6b](https://github.com/CandriaJS/meme-plugin/commit/26afb6b002e46ff45a2a380e58f17a9584d37a6f))
+* 空数据处理 ([6752d77](https://github.com/CandriaJS/meme-plugin/commit/6752d773c3f902c6927bf73f748a05503ae1cf11))
+
+
+### ♻️ 代码重构
+
+* **imageTool:** 重构图像处理逻辑 ([900029e](https://github.com/CandriaJS/meme-plugin/commit/900029e2ef6848945d10d888ff0273ef8ac614f3))
+* **models:** 优化Miao-Yunzai引用消息兼容性 ([1543740](https://github.com/CandriaJS/meme-plugin/commit/15437408ec874e5ceaa65aac69eb6ef76b650277))
+* **models:** 优化图片上传逻辑 ([985c5fb](https://github.com/CandriaJS/meme-plugin/commit/985c5fbc03f64a1be12d6d344ddf8dc94ec3c123))
+
 ## [2.0.1](https://github.com/CandriaJS/meme-plugin/compare/v2.0.0...v2.0.1) (2025-06-03)
 
 
