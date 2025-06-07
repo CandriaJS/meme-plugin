@@ -28,81 +28,99 @@ body {
 
 .card-container {
   max-width: 1200px;
-  margin: 20px auto;
-  padding: 20px;
+  margin: 30px auto;
+  padding: 30px;
 }
 
 .header-card {
-  background: linear-gradient(135deg, #6e8efb, #a777e3);
-  border-radius: 15px;
-  padding: 30px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 24px;
+  padding: 35px;
   text-align: center;
-  color: white;
-  margin-bottom: 30px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  color: #333;
+  margin-bottom: 40px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.header-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.1);
+  z-index: 1;
 }
 
 .header-card .title {
-  font-size: 28px;
-  font-weight: bold;
-  margin-bottom: 10px;
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 2;
+  color: #333;
+  letter-spacing: 1px;
 }
 
 .header-card .subtitle {
-  font-size: 16px;
-  opacity: 0.9;
+  font-size: 18px;
+  opacity: 0.8;
+  position: relative;
+  z-index: 2;
+  color: #555;
+  letter-spacing: 0.5px;
 }
 
 .status-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .status-card {
-  background: white;
-  border-radius: 12px;
-  padding: 20px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  padding: 25px;
   text-align: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s ease;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .status-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-8px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+  background: rgba(255, 255, 255, 0.8);
 }
 
 .card-icon {
-  font-size: 32px;
-  margin-bottom: 15px;
+  font-size: 36px;
+  margin-bottom: 18px;
+  display: inline-block;
 }
 
 .card-label {
-  color: #666;
-  font-size: 14px;
-  margin-bottom: 8px;
+  color: #555;
+  font-size: 15px;
+  margin-bottom: 10px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
 }
 
 .card-value {
   color: #333;
-  font-size: 20px;
-  font-weight: bold;
-}
-
-@media (max-width: 768px) {
-  .status-grid {
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 15px;
-  }
-  
-  .header-card {
-    padding: 20px;
-  }
-  
-  .header-card .title {
-    font-size: 24px;
-  }
+  font-size: 24px;
+  font-weight: 700;
 }
 
 .status-item {
