@@ -242,11 +242,11 @@ export async function get_user_name (e, userId) {
     let userInfo
     if (e.isGroup) {
       const memberInfo = Bot[e.self_id].pickMember(e.group_id, userId)
-      userInfo = await memberInfo.getInfo()
+      userInfo = await memberInfo.getInfo() ?? memberInfo.info
       nickname = userInfo.card?.trim() || userInfo.nickname?.trim() || null
     } else if (e.isPrivate) {
       const friendInfo = Bot[e.self_id].pickFriend(userId)
-      userInfo = await friendInfo.getInfo()
+      userInfo = await friendInfo.getInfo() ?? friendInfo.info
       nickname = userInfo.nickname.trim() ?? null
     } else {
       nickname = e.sender.nickname.trim() ?? null
