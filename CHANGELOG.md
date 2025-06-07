@@ -1,5 +1,17 @@
 # 变更日志
 
+## [2.1.1](https://github.com/CandriaJS/meme-plugin/compare/v2.1.0...v2.1.1) (2025-06-07)
+
+
+### 🐛 错误修复
+
+* 修复Miao-Yunzai获取用户昵称兼容性 ([20b059a](https://github.com/CandriaJS/meme-plugin/commit/20b059a869c21e6706779b024e61148f97f6eead))
+
+
+### 🎨 代码样式
+
+* 优化状态页面样式和布局 ([1c2e586](https://github.com/CandriaJS/meme-plugin/commit/1c2e5860c867a4d914e16bee42fbd010b7f69f7f))
+
 ## [2.1.0](https://github.com/CandriaJS/meme-plugin/compare/v2.0.1...v2.1.0) (2025-06-06)
 
 
