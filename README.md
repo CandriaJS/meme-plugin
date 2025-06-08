@@ -56,7 +56,7 @@ git clone --depth=1 https://gh.wuliya.xin/https://github.com/CandriaJS/meme-plug
 
 ### 安装依赖 📦
 ```bash
-pnpm install --filter=meme-plugin
+pnpm install --filter=@candriajs/meme-plugin
 ```
 
 ## 使用帮助 ℹ️
