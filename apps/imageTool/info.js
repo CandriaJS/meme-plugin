@@ -1,5 +1,6 @@
 import { Version } from '#components'
 import { imageTool, utils } from '#models'
+
 export class Imageinfo extends plugin {
   constructor () {
     super({

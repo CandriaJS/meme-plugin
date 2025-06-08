@@ -6,6 +6,8 @@ import AdmZip from 'adm-zip'
 import { Config, Version } from '#components'
 import { imageTool, utils } from '#models'
 
+import common from '../../../lib/common/common.js'
+
 const getType = Config.server.usebase64 ? 'base64' : 'url'
 const uploadType = Config.server.usebase64 ? 'data' : 'url'
 
@@ -407,7 +409,7 @@ export class ImageTools extends plugin {
         ...images.map((img) => segment.image(`base64://${img}`))
       ]
 
-      await e.reply(Bot.makeForwardArray(replyMessage))
+      await e.reply(common.makeForwardMsg(e, replyMessage))
     } catch (error) {
       logger.error(error)
       await e.reply(`GIF分解失败: ${error.message}`)
