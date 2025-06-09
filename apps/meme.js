@@ -49,24 +49,23 @@ export class meme extends plugin {
    * 更新正则
    */
   async updateRegExp () {
-    memeRegExp = await createRegex(async () => await utils.get_meme_all_keywords() ?? [])
-    presetRegExp = await createRegex(async () => await utils.get_preset_all_keywords() ?? [])
-    if (!memeRegExp && !presetRegExp) {
+    memeRegExp = await createRegex(async () => await utils.get_meme_all_keywords())
+    presetRegExp = await createRegex(async () => await utils.get_preset_all_keywords())
+    if (presetRegExp && memeRegExp) {
+      this.rule = [
+        {
+          reg: memeRegExp,
+          fnc: 'meme'
+        },
+        {
+          reg: presetRegExp,
+          fnc: 'preset'
+        }
+      ]
+    } else {
       logger.info(`[${Version.Plugin_AliasName}] 没有找到表情关键词, 请使用[#柠糖表情更新资源], 稍后再试`)
       return false
     }
-
-    this.rule = [
-      {
-        reg: memeRegExp,
-        fnc: 'meme'
-      },
-      {
-        reg: presetRegExp,
-        fnc: 'preset'
-      }
-    ]
-
     return true
   }
   async meme (e) {
