@@ -1,6 +1,5 @@
 import { exec as childExec, spawn } from 'node:child_process'
 import fs from 'node:fs/promises'
-import net from 'node:net'
 import os from 'node:os'
 import path from 'node:path'
 import { promisify } from 'node:util'
@@ -405,26 +404,14 @@ export async function get_meme_server_meme_total () {
 
 /**
  * 检查指定的端口是否被占用
- * 后续将改成karin内置函数
  * @param port 监听端口
- * @returns 被占用则返回 true，否则返回 false
+ * @returns 端口可用返回true，否则返回false
  */
 export async function checkPort (port) {
-  return new Promise(resolve => {
-    const server = net.createServer()
-
-    server.once('error', () => {
-      server.close()
-      resolve(false)
-    })
-
-    server.once('listening', () => {
-      server.close()
-      resolve(true)
-    })
-
-    server.listen(port, '127.0.0.1')
-  })
+  const isWin = os.type() === 'Windows_NT'
+  const command = isWin ? `netstat -ano | findstr :${port}` : `lsof -i :${port}`
+  const { stdout } = await exec(command)
+  return stdout.toString().trim().length === 0
 }
 
 /**
