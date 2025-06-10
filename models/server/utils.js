@@ -1,4 +1,4 @@
-import { exec as childExec, spawn } from 'node:child_process'
+import { exec as execCmd, spawn } from 'node:child_process'
 import fs from 'node:fs/promises'
 import os from 'node:os'
 import path from 'node:path'
@@ -11,7 +11,7 @@ import { utils } from '#models'
 
 import { start } from './manger.js'
 
-const exec = promisify(childExec)
+const exec = promisify(execCmd)
 /**
  * 格式化日期时间
  */
@@ -409,9 +409,9 @@ export async function get_meme_server_meme_total () {
  */
 export async function checkPort (port) {
   const isWin = os.type() === 'Windows_NT'
-  const command = isWin ? `netstat -ano | findstr :${port}` : `lsof -i :${port}`
+  const command = isWin ? `netstat -ano | findstr :${port}` : `lsof -i:${port} | grep LISTEN`
   const { stdout } = await exec(command)
-  return stdout.toString().trim().length === 0
+  return stdout.toString().length === 0
 }
 
 /**

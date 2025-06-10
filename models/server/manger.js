@@ -71,18 +71,21 @@ export async function start (port = 2255) {
     if (!memeServerPath) {
       throw new Error('未找到表情服务端文件')
     }
-    const check = await checkPort(port)
-    if (!check) {
+    try {
       if (Config.server.kill) {
-        try {
-          await kil_meme_server(port)
-        } catch (error) {
-          logger.error(error)
-          throw new Error('[meme-server] 端口被占用, 杀死进程失败请手动杀死进程')
+        const isPortAvailable  = await checkPort(port)
+        if (!isPortAvailable) {
+          try {
+            await kil_meme_server(port)
+          } catch (error) {
+            logger.error(error)
+            throw new Error('[meme-server] 端口被占用, 杀死进程失败请手动杀死进程')
+          }
         }
-      } else {
-        logger.warn(`[meme-server] 端口${port}已被占用, 请检查并稍后重启`)
       }
+    } catch (error) {
+      logger.error(error)
+      throw new Error('[meme-server] 端口检查失败，请手动检查')
     }
     serverProcess = spawn(memeServerPath, [ 'run' ], { stdio: 'inherit' })
     serverProcess.on('error', (error) => {
