@@ -1,5 +1,27 @@
 # 变更日志
 
+## [2.1.1](https://github.com/CandriaJS/meme-plugin/compare/v2.1.0...v2.1.1) (2025-06-11)
+
+
+### 🐛 错误修复
+
+* **meme-server:** 优化端口检查和进程杀死逻辑 ([e2bb0f3](https://github.com/CandriaJS/meme-plugin/commit/e2bb0f347bb587c0877e6e616688b098e56ee304))
+* **meme:** 优化表情更新正则逻辑 ([638d0d0](https://github.com/CandriaJS/meme-plugin/commit/638d0d02fd79b3cfc04bf689049c7b113f88e78a))
+* **server:** 优化端口检测和进程杀死逻辑 ([efe480d](https://github.com/CandriaJS/meme-plugin/commit/efe480d3fc9c85c64c1d4c91ecd2fbeb0069fce0))
+* 优化用户昵称获取 ([05f18cf](https://github.com/CandriaJS/meme-plugin/commit/05f18cf402b73e03619ab61813ad82a9f4ae9f06))
+* 修复Miao-Yunzai获取用户昵称兼容性 ([20b059a](https://github.com/CandriaJS/meme-plugin/commit/20b059a869c21e6706779b024e61148f97f6eead))
+* 更新日志截图 ([8e04f48](https://github.com/CandriaJS/meme-plugin/commit/8e04f48a49ab46a9c38bc38f56540b66bf0b4eb2))
+
+
+### 📝 文档更新
+
+* 更新文档描述 ([396954f](https://github.com/CandriaJS/meme-plugin/commit/396954f2c96a0b15fc6e2bcb3233046c35815f68))
+
+
+### 🎨 代码样式
+
+* 优化状态页面样式和布局 ([1c2e586](https://github.com/CandriaJS/meme-plugin/commit/1c2e5860c867a4d914e16bee42fbd010b7f69f7f))
+
 ## [2.1.0](https://github.com/CandriaJS/meme-plugin/compare/v2.0.1...v2.1.0) (2025-06-06)
 
 
