@@ -371,13 +371,6 @@ export async function upload_image (
     const url = await get_base_url()
     let data
     switch (type) {
-      case 'url':
-        data = {
-          type: 'url',
-          url: image,
-          ...(headers && { headers })
-        }
-        break
       case 'path':
         data = {
           type: 'path',
@@ -388,6 +381,14 @@ export async function upload_image (
         data = {
           type: 'data',
           data: Buffer.isBuffer(image) ? image.toString('base64') : image
+        }
+        break
+      case 'url':
+      default:
+        data = {
+          type: 'url',
+          url: image,
+          ...(headers && { headers })
         }
         break
     }

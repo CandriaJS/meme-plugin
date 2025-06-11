@@ -43,7 +43,7 @@ export async function getImageBase64 (image) {
       logger.error('图片地址不能为空')
     }
 
-    if (typeof image === 'string') return image
+    if (typeof image === 'string' && !(/^https?:\/\//i.test(image))) return image
 
     if (Buffer.isBuffer(image)) {
       return image.toString('base64')
@@ -322,27 +322,22 @@ export async function get_image (e, type = 'url') {
    * 处理引用消息中的图片
    */
   if (quotedImages.length > 0) {
-    for (const item of quotedImages) {
+    const quotedImagesPromises = quotedImages.map(async (item) => {
       switch (type) {
-        case 'url':
-          tasks.push(
-            Promise.resolve({
-              userId: item.userId,
-              image: item.url.toString()
-            })
-          )
-          break
         case 'base64':
+          return {
+            userId: item.userId,
+            image: await getImageBase64(item.url)
+          }
+        case 'url':
         default:
-          tasks.push(
-            Promise.resolve({
-              userId: item.userId,
-              image: await getImageBase64(item.url)
-            })
-          )
-          break
+          return {
+            userId: item.userId,
+            image: item.url.toString()
+          }
       }
-    }
+    })
+    tasks.push(...quotedImagesPromises)
   }
 
   /**
@@ -351,16 +346,16 @@ export async function get_image (e, type = 'url') {
   if (imagesInMessage.length > 0) {
     const imagePromises = imagesInMessage.map(async (item) => {
       switch (type) {
-        case 'url':
-          return {
-            userId: item.userId,
-            image: item.url.toString()
-          }
         case 'base64':
-        default:
           return {
             userId: item.userId,
             image: await getImageBase64(item.url)
+          }
+        case 'url':
+        default:
+          return {
+            userId: item.userId,
+            image: item.url.toString()
           }
       }
     })
