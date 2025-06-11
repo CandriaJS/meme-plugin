@@ -1,3 +1,30 @@
+@font-face {
+  font-family: "Number";
+  src: url("https://static.wuliya.cn/static/font/TTTGB-Number.woff") format("woff");
+  font-display: swap
+}
+@font-face {
+  font-family: "YS";
+  src: url("https://static.wuliya.cn/static/font/HYWH.woff") format("woff");
+  font-display: swap
+}
+@font-face {
+  font-family: "Helvetica";
+  src: url("https://static.wuliya.cn/static/font/HELVETI.woff") format("woff");
+  font-display: swap
+}
+@font-face {
+  font-family: "NotoColorEmoji";
+  src: url("https://static.wuliya.cn/static/font/NotoColorEmoji-Regular.ttf") format("truetype");
+  font-display: swap
+}
+
+body {
+  color: #0d1117;
+  font-family: Number, YS, PingFangSC-Medium, NotoColorEmoji, sans-serif;
+  transform-origin: 0 0;
+  width: 100%;
+}
 
 .markdown-body {
   box-sizing: border-box;
