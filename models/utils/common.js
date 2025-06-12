@@ -70,11 +70,7 @@ export async function get_base_url () {
         base_url = Config.server.url.replace(/\/+$/, '')
         break
       case 1: {
-        const resources_path = path.join(
-          os.homedir(),
-          '.meme_generator',
-          'resources'
-        )
+        const resources_path = path.join(Version.Plugin_Path, 'data', 'memes', 'resources')
         if (!(await exists(resources_path))) {
           throw new Error('请先使用[#柠糖表情下载表情服务端资源]')
         }
