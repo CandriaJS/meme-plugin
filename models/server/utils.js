@@ -34,33 +34,6 @@ function formatRuntime (diffMs) {
   return runtime
 }
 
-/*
- * 获取本地IP地址
- * @returns 本地IP地址
- */
-export async function get_local_ip () {
-  const interfaces = os.networkInterfaces()
-
-  for (const devName in interfaces) {
-    const iface = interfaces[devName]
-    if (!iface) continue
-
-    for (const alias of iface) {
-      if (!alias) continue
-
-      if (
-        alias.family === 'IPv4' &&
-       alias.address !== '127.0.0.1' &&
-       !alias.internal
-      ) {
-        return alias.address
-      }
-    }
-  }
-
-  return Promise.resolve('127.0.0.1')
-}
-
 
 /**
  * 重启表情服务端
@@ -142,7 +115,10 @@ export async function download_server_resource () {
     if (!server_path) throw new Error('表情服务端文件不存在')
 
     return new Promise((resolve, reject) => {
-      const downloadProcess = spawn(server_path, [ 'download' ], { stdio: 'inherit' })
+      const downloadProcess = spawn(server_path, [ 'download' ], {
+        stdio: 'inherit',
+        env: { ...process.env, MEME_HOME: path.join(Version.Plugin_Path, 'data', 'memes') }
+      })
 
       downloadProcess.on('error', (error) => {
         logger.error(error)
@@ -455,7 +431,8 @@ export async function init_server (port = 2255) {
     if (type === 'Linux') {
       await exec('chmod +x ' + server_path)
     }
-    const resource_path = path.join(os.homedir(), '.meme_generator', 'resources')
+
+    const resource_path = path.join(Version.Plugin_Path, 'data', 'memes', 'resources')
     if (!await utils.exists(resource_path)) {
       logger.info('表情服务端资源不存在，请稍后使用[#柠糖表情下载表情服务端资源]命令下载')
     }

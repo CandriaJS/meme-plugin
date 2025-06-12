@@ -5,7 +5,7 @@ import path from 'node:path'
 
 import TOML from 'smol-toml'
 
-import { Config } from '#components'
+import { Config, Version } from '#components'
 import { utils } from '#models'
 
 import { checkPort, get_meme_server_name, get_meme_server_path, kil_meme_server } from './utils.js'
@@ -48,7 +48,7 @@ const config = {
 
 export async function start (port = 2255) {
   try {
-    const configDir = path.join(os.homedir(), '.meme_generator')
+    const configDir = path.join(Version.Plugin_Path, 'data', 'memes')
     const configPath = path.join(configDir, 'config.toml')
     if (!await utils.exists(configDir)) {
       await fs.mkdir(configDir)
@@ -87,7 +87,10 @@ export async function start (port = 2255) {
       logger.error(error)
       throw new Error('[meme-server] 端口检查失败，请手动检查')
     }
-    serverProcess = spawn(memeServerPath, [ 'run' ], { stdio: 'inherit' })
+    serverProcess = spawn(memeServerPath, [ 'run' ], {
+      stdio: 'inherit',
+      env: { ...process.env, MEME_HOME: configDir }
+    })
     serverProcess.on('error', (error) => {
       logger.error(error)
       throw new Error(`启动服务器失败: ${(error).message}`)
