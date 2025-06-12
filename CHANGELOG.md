@@ -1,5 +1,12 @@
 # 变更日志
 
+## [2.1.3](https://github.com/CandriaJS/meme-plugin/compare/v2.1.2...v2.1.3) (2025-06-12)
+
+
+### ♻️ 代码重构
+
+* **server:** 重构表情服务器相关功能 ([5dee4de](https://github.com/CandriaJS/meme-plugin/commit/5dee4dea11190dff9c0973ee94b1c6be205bd338))
+
 ## [2.1.2](https://github.com/CandriaJS/meme-plugin/compare/v2.1.1...v2.1.2) (2025-06-11)
 
 
