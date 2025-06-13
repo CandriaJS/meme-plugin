@@ -1,3 +1,9 @@
+# 已跑路！
+> [!IMPORTANT]
+>
+> 主开发已跑路到 [Karin](https://github.com/KarinJS/Karin) , 本插件暂无后续更新内容
+
+
 # <h1 align="center">柠糖表情</h1>
 
 <div align="center">

@@ -1,6 +1,5 @@
 import { spawn } from 'node:child_process'
 import fs from 'node:fs/promises'
-import os from 'node:os'
 import path from 'node:path'
 
 import TOML from 'smol-toml'
@@ -8,7 +7,7 @@ import TOML from 'smol-toml'
 import { Config, Version } from '#components'
 import { utils } from '#models'
 
-import { checkPort, get_meme_server_name, get_meme_server_path, kil_meme_server } from './utils.js'
+import { get_meme_server_name, get_meme_server_path } from './utils.js'
 
 let serverProcess = null
 
