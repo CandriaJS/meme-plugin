@@ -379,47 +379,6 @@ export async function get_meme_server_meme_total () {
 }
 
 /**
- * 检查指定的端口是否被占用
- * @param port 监听端口
- * @returns 端口可用返回true，否则返回false
- */
-export async function checkPort (port) {
-  const isWin = os.type() === 'Windows_NT'
-  const command = isWin ? `netstat -ano | findstr :${port}` : `lsof -i:${port} | grep LISTEN`
-  const { stdout } = await exec(command)
-  const output = stdout.trim() || '' // 当stdout没有内容会抛出错误
-  return !output
-}
-
-/**
- * 杀死表情服务端进程
- * @param port - 端口
- * @returns 杀死结果
- */
-export async function kil_meme_server (port) {
-  const isWin = os.type() === 'Windows_NT'
-  const getPid = async (port) => {
-    const command = isWin ? `netstat -ano | findstr :${port}` : `lsof -i:${port} | grep LISTEN | awk '{print $2}'`
-    const { stdout } = await exec(command)
-    if (!stdout) return null
-    if (isWin) {
-      const pid = stdout.toString().split(/\s+/).filter(Boolean).pop()
-      return isNaN(Number(pid)) ? null : Number(pid)
-    }
-
-    return isNaN(Number(stdout)) ? null : Number(stdout)
-  }
-  const pid = await getPid(Number(port))
-  if (!pid) return false
-  const command = isWin
-    ? `taskkill /F /PID ${pid}`
-    : `kill -9 ${pid}`
-  const { stderr } = await exec(command)
-  if (stderr) return false
-  return true
-}
-
-/**
  * 初始化表情服务端
  * @param port - 端口
  * @returns 初始化结果
