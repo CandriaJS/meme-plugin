@@ -387,7 +387,8 @@ export async function checkPort (port) {
   const isWin = os.type() === 'Windows_NT'
   const command = isWin ? `netstat -ano | findstr :${port}` : `lsof -i:${port} | grep LISTEN`
   const { stdout } = await exec(command)
-  return stdout.toString().length === 0
+  const output = stdout.trim() || '' // 当stdout没有内容会抛出错误
+  return !output
 }
 
 /**
