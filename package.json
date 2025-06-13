@@ -1,6 +1,6 @@
 {
   "name": "@candriajs/meme-plugin",
-  "version": "2.1.5",
+  "version": "2.1.6",
   "author": "CandriaJS",
   "type": "module",
   "dependencies": {
