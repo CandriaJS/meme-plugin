@@ -1,5 +1,22 @@
 # 变更日志
 
+## [2.1.6](https://github.com/CandriaJS/meme-plugin/compare/v2.1.5...v2.1.6) (2025-06-13)
+
+
+### 📝 文档更新
+
+* 更新 README 主开发已跑路到 Karin ([21d6cff](https://github.com/CandriaJS/meme-plugin/commit/21d6cffe04096fa0b629c60375b63846433a6b27))
+
+
+### 🎨 代码样式
+
+* 优化更新日志截图 ([0bf7dae](https://github.com/CandriaJS/meme-plugin/commit/0bf7daeba55dbd0f3c4edf4bed05a64a709259ec))
+
+
+### ♻️ 代码重构
+
+* **server:** 移除端口检查和进程杀死功能 ([1326ce7](https://github.com/CandriaJS/meme-plugin/commit/1326ce72b4694b58d1da241dd9bc13ab28777183))
+
 ## [2.1.5](https://github.com/CandriaJS/meme-plugin/compare/v2.1.4...v2.1.5) (2025-06-13)
 
 
