@@ -74,7 +74,7 @@ export async function make_meme (
       }
     }
     const response = await utils.make_meme(memekey, formdata)
-    const basedata = await utils.getImageBase64(response)
+    const basedata = await utils.get_image_base64(response)
     if (Config.stat.enable && e.isGroup) {
       const groupStart = (await db.stat.get({
         groupId: e.group_id,

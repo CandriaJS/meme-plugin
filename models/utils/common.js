@@ -13,7 +13,7 @@ import { exists } from './tools.js'
  * @returns {Promise<Buffer>} - 返回图片的 Buffer 数据
  * @throws {Error} - 如果图片地址为空或请求失败，则抛出异常
  */
-export async function getImageBuffer (image) {
+export async function get_image_buffer (image) {
   try {
     if (!image) throw new Error('图片地址不能为空')
 
@@ -37,7 +37,7 @@ export async function getImageBuffer (image) {
  * @returns {Promise<string>} - 返回 Base64 编码的图片字符串，可能包含 `base64://` 前缀
  * @throws {Error} - 如果图片地址为空或处理失败，则抛出异常
  */
-export async function getImageBase64 (image) {
+export async function get_image_base64 (image) {
   try {
     if (!image) {
       logger.error('图片地址不能为空')
@@ -49,7 +49,7 @@ export async function getImageBase64 (image) {
       return image.toString('base64')
     }
 
-    const buffer = await getImageBuffer(image)
+    const buffer = await get_image_buffer(image)
     return buffer.toString('base64')
   } catch (error) {
     logger.error(`获取图片Base64失败: ${error.message}`)
@@ -276,7 +276,7 @@ export async function get_image (e, type = 'url') {
       url: img.url
     }))
 
-  const replyId = e.reply_id ?? e.message.find((m) => m.type === 'reply')?.id
+  const replyId = e.source.seq ?? e.reply_id ?? e.message.find((m) => m.type === 'reply')?.id
 
   const tasks = []
 
@@ -288,7 +288,7 @@ export async function get_image (e, type = 'url') {
     if (e.isGroup) {
       source = await Bot[e.self_id]
         .pickGroup(e.group_id)
-        .getChatHistory(e.source.seq || replyId, 1)
+        .getChatHistory(replyId, 1)
     } else if (e.isPrivate) {
       source = await Bot[e.self_id]
         .pickFriend(e.user_id)
@@ -321,7 +321,7 @@ export async function get_image (e, type = 'url') {
         case 'base64':
           return {
             userId: item.userId,
-            image: await getImageBase64(item.url)
+            image: await get_image_base64(item.url)
           }
         case 'url':
         default:
@@ -343,7 +343,7 @@ export async function get_image (e, type = 'url') {
         case 'base64':
           return {
             userId: item.userId,
-            image: await getImageBase64(item.url)
+            image: await get_image_base64(item.url)
           }
         case 'url':
         default:

@@ -15,7 +15,7 @@ export const get_image = async (image_id, type = 'base64') => {
         return res.data
       case 'base64':
       default:
-        return await utils.getImageBase64(res.data)
+        return await utils.get_image_base64(res.data)
     }
   } catch (error) {
     throw new Error(`获取图片失败: ${erro.message}`)
