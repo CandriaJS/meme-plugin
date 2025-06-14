@@ -276,7 +276,7 @@ export async function get_image (e, type = 'url') {
       url: img.url
     }))
 
-  const replyId = e.source.seq ?? e.reply_id ?? e.message.find((m) => m.type === 'reply')?.id
+  const replyId = e.source?.seq ?? e.reply_id ?? e.message.find((m) => m.type === 'reply')?.id
 
   const tasks = []
 
