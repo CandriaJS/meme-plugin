@@ -140,10 +140,11 @@ export async function get_user_avatar (e, userId, type = 'url') {
           const friend = e.bot.pickFriend(userId)
           avatarUrl = await friend.getAvatarUrl()
         }
-      } catch (err) {}
-      if (!avatarUrl) {
-        throw new Error(`获取用户头像地址失败: ${userId}`)
+      } catch {
+        logger.warn('获取用户头像出错, 将使用api获取用户头像')
+        avatarUrl = `https://q1.qlogo.cn/g?b=qq&nk=${userId}&s=640`
       }
+
       return avatarUrl
     }
 
