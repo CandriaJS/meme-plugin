@@ -1,5 +1,12 @@
 # 变更日志
 
+## [2.1.7](https://github.com/CandriaJS/meme-plugin/compare/v2.1.6...v2.1.7) (2025-06-14)
+
+
+### ♻️ 代码重构
+
+* **models:** 优化Miao-Yunzai引用消息兼容性 ([e10c994](https://github.com/CandriaJS/meme-plugin/commit/e10c994b92ce862fd3a1b08de6e420af4df54d28))
+
 ## [2.1.6](https://github.com/CandriaJS/meme-plugin/compare/v2.1.5...v2.1.6) (2025-06-13)
 
 
