@@ -1,5 +1,17 @@
 # 变更日志
 
+## [2.1.8](https://github.com/CandriaJS/meme-plugin/compare/v2.1.7...v2.1.8) (2025-06-14)
+
+
+### 🐛 错误修复
+
+* **models:** 优化用户头像获取逻辑 ([9ee5fe9](https://github.com/CandriaJS/meme-plugin/commit/9ee5fe9d101fb67574bfab0e3f4082d923e6e546))
+
+
+### ♻️ 代码重构
+
+* **models:** 优化回复 ID 获取逻辑 ([22dd393](https://github.com/CandriaJS/meme-plugin/commit/22dd39397370af0e47d9dbc19972d8fc7627abc9))
+
 ## [2.1.7](https://github.com/CandriaJS/meme-plugin/compare/v2.1.6...v2.1.7) (2025-06-14)
 
 
