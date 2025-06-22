@@ -6,7 +6,7 @@ import AdmZip from 'adm-zip'
 import { Config, Version } from '#components'
 import { imageTool, utils } from '#models'
 
-import common from '../../../lib/common/common.js'
+import common from '../../../../lib/common/common.js'
 
 const getType = Config.server.usebase64 ? 'base64' : 'url'
 const uploadType = Config.server.usebase64 ? 'data' : 'url'
