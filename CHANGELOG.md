@@ -1,5 +1,12 @@
 # 变更日志
 
+## [2.1.9](https://github.com/CandriaJS/meme-plugin/compare/v2.1.8...v2.1.9) (2025-06-22)
+
+
+### 🐛 错误修复
+
+* 导入路径 ([6588906](https://github.com/CandriaJS/meme-plugin/commit/65889068f8d44c9d6ec3289bd9c74ddd4c6deb53))
+
 ## [2.1.8](https://github.com/CandriaJS/meme-plugin/compare/v2.1.7...v2.1.8) (2025-06-14)
 
 
